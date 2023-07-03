@@ -1,0 +1,18 @@
+spring:
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/storeManager?createDatabaseIfNotExist=true&useSSL=false
+    username: root
+    password: Dragalevtsi#123
+  jpa:
+    #     Choose either MySQL 8 or MySQL 5 below
+    #    For MySQL 8:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
