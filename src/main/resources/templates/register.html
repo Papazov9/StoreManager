@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{fragments/common::notLoggedNav}"></th:block>
+<section>
+  <div class="container mt-5 pt-5">
+    <div class="row">
+      <div class="col-12 col-sm-7 col-md-6 m-auto">
+        <div class="card border-dark ui-widget-shadow">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                 class="mx-auto my-3 d-block m-auto bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+            <form th:method="POST" th:action="@{/user/register}" th:object="${userRegistrationBinding}">
+              <input type="text" name="email" id="email" class="form-control my-4 py-2"
+                     placeholder="Email"/>
+              <small th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}"
+                     class="bg-gray text-light rounded">
+                The email must contain "@"!
+              </small>
+              <input type="text" name="username" id="username" class="form-control my-4 py-2"
+                     placeholder="Username"/>
+              <small th:if="${#fields.hasErrors('username')}"
+                     th:errors="*{username}"
+                     class="bg-gray text-light rounded">
+                Username must be unique and the length between 2 and 30 symbols.
+              </small>
+              <input type="password" name="password" id="password" class="form-control my-4 py-2"
+                     placeholder="Password"/>
+              <small th:if="${#fields.hasErrors('password')}"
+                     th:errors="*{password}"
+                     class="bg-gray text-light rounded">
+                The length of the password must be at least 3 symbols!</small>
+              <input type="password" name="confirmPassword" id="confirmPassword" class="form-control my-4 py-2"
+                     placeholder="Confirm password"/>
+              <small th:if="${#fields.hasErrors('confirmPassword')}"
+                     th:errors="*{confirmPassword}"
+                     class="bg-gray text-light rounded">
+                The length of the password must be at least 3 symbols!</small>
+              <div class="text-center mt-3">
+                <button class="btn btn-danger">Register</button>
+                <a href="/user/login" class="nav-link text-danger">Already have an account?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

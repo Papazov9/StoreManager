@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+    <th:block th:replace="~{fragments/common::notLoggedNav}"></th:block>
+<section>
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-12 col-sm-7 col-md-6 m-auto">
+                <div class="card border-dark ui-widget-shadow">
+                    <div class="card-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+                             class="mx-auto my-3 d-block m-auto bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd"
+                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                        <form action="">
+                            <input type="text" name="username" id="username" class="form-control my-4 py-2"
+                                   placeholder="Username"/>
+                            <input type="password" name="password" id="password" class="form-control my-4 py-2"
+                                   placeholder="Password"/>
+                            <p th:if="${badCredentials}" id="error-password" class="border border-dark rounded"
+                               style="color: white; background-color: gray;">Invalid username or password.</p>
+                            <div class="text-center mt-3">
+                                <button class="btn btn-danger">Login</button>
+                                <a href="/user/register" class="nav-link text-danger">Do not have an account? Click here!</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
