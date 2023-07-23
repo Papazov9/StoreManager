@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Admin panel</title>
+    <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<div>
+    <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
+</div>
+
+
+<div class="d-lg-flex justify-content-center pt-5 mt-4">
+    <form action="" method="post" enctype="multipart/form-data"
+          class="text-light bg-secondary form-container rounded">
+        <h1 class="text-light border-bottom mt-1">Import your file</h1>
+        <div class="form-group mx-sm-3 mb-2">
+            <div class="col">
+                <input name="fileUpload" id="fileUpload" type="file" class="form-control">
+
+                <div  class="align-content-center">
+                    <button type="submit" class="btn btn-block mt-3 justify-content-center">IMPORT FILE</button>
+                </div>
+
+            </div>
+            <small id="fileUploadError" class="bg-warning text-light rounded justify-content-center d-flex mt-2">
+                No files imported
+            </small>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
