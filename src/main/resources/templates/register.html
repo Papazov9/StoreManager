@@ -23,30 +23,34 @@
             </svg>
             <form th:method="POST" th:action="@{/user/register}" th:object="${userRegistrationBinding}">
               <input type="text" name="email" id="email" class="form-control my-4 py-2"
+                     th:field="*{email}"
                      placeholder="Email"/>
               <small th:if="${#fields.hasErrors('email')}"
                      th:errors="*{email}"
-                     class="bg-gray text-light rounded">
-                The email must contain "@"!
+                     class="bg-danger text-light rounded">
+                The email must contain "@" and "." !
               </small>
               <input type="text" name="username" id="username" class="form-control my-4 py-2"
+                     th:field="*{username}"
                      placeholder="Username"/>
               <small th:if="${#fields.hasErrors('username')}"
                      th:errors="*{username}"
-                     class="bg-gray text-light rounded">
+                     class="bg-danger text-light rounded">
                 Username must be unique and the length between 2 and 30 symbols.
               </small>
               <input type="password" name="password" id="password" class="form-control my-4 py-2"
+                     th:field="*{password}"
                      placeholder="Password"/>
               <small th:if="${#fields.hasErrors('password')}"
                      th:errors="*{password}"
-                     class="bg-gray text-light rounded">
+                     class="bg-danger text-light rounded">
                 The length of the password must be at least 3 symbols!</small>
               <input type="password" name="confirmPassword" id="confirmPassword" class="form-control my-4 py-2"
+                     th:field="*{confirmPassword}"
                      placeholder="Confirm password"/>
               <small th:if="${#fields.hasErrors('confirmPassword')}"
                      th:errors="*{confirmPassword}"
-                     class="bg-gray text-light rounded">
+                     class="bg-danger text-light rounded">
                 The length of the password must be at least 3 symbols!</small>
               <div class="text-center mt-3">
                 <button class="btn btn-danger">Register</button>
