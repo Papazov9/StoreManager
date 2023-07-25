@@ -15,12 +15,12 @@
 
 
 <div class="d-lg-flex justify-content-center pt-5 mt-4">
-    <form action="" method="post" enctype="multipart/form-data"
-          class="bg-danger form-container rounded border m-5 p-5">
-        <h1 class="text-light border-bottom mt-2 text-center">Import your file</h1>
+    <form th:action="@{/returns/import}" th:method="post" enctype="multipart/form-data"
+          class="text-light bg-secondary form-container rounded">
+        <h1 class="text-light border-bottom mt-1">Import your file</h1>
         <div class="form-group mx-sm-3 mb-2">
             <div class="col">
-                <input name="fileUpload" id="fileUpload" type="file" class="form-control mt-4">
+                <input name="file" id="fileUpload" type="file" class="form-control">
 
                 <div style="margin-left: 30%">
                     <button type="submit" class="btn btn-light mt-3" >IMPORT FILE</button>
@@ -34,6 +34,6 @@
 
     </form>
 </div>
-<th:block th:replace="~{fragments/common::footer}"></th:block>
+
 </body>
 </html>

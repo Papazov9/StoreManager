@@ -17,13 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity
 public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
+        http.authorizeHttpRequests(authorize ->
                         authorize.requestMatchers("/", "/home", "/user/login", "/user/register", "/user/login-error").permitAll()
                                 .requestMatchers("/static/**", "/js/**", "/css/**", "/img/**", "/videos/**").permitAll()
                                 .requestMatchers("/admin/**", "/api/users", "/products/edit/**").hasRole(RoleEnum.ADMIN.name())
