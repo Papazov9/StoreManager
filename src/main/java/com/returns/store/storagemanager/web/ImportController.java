@@ -1,11 +1,10 @@
 package com.returns.store.storagemanager.web;
 
+import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -28,12 +27,14 @@ public class ImportController {
     }
 
     @PostMapping("/import")
-    public String importFile(@RequestParam("file") MultipartFile file) {
-        if (productService.importCSVFile(file)) {
-            return "home";
-        }
-
-        return "import-error";
+    public String importFile(@RequestParam("file") MultipartFile file) throws ProductAlreadyExists{
+        productService.importCSVFile(file);
+        return "products";
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ProductAlreadyExists.class)
+    public String productNotFound() {
+        return "import-error";
+    }
 }

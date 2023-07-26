@@ -27,10 +27,10 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    public boolean importCSVFile(MultipartFile file) {
+    public void importCSVFile(MultipartFile file) throws ProductAlreadyExists{
         this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         try (Reader inputStreamReader = new InputStreamReader(file.getInputStream())) {
-            List<CSVBindingObject> products = new CsvToBeanBuilder(inputStreamReader)
+            List<CSVBindingObject> products = new CsvToBeanBuilder<CSVBindingObject>(inputStreamReader)
                     .withType(CSVBindingObject.class)
                     .build()
                     .parse();
@@ -39,15 +39,16 @@ public class ProductService {
                 Optional<SellingProduct> product = this.productRepo.findByReturnItemId(s.getReturnItemId());
 
                 if (product.isPresent()) {
-                    throw new ProductAlreadyExists("Product with id : %s already exists!", s.getReturnItemId());
+                    throw new IllegalArgumentException(s.getReturnItemId());
                 }
                 SellingProduct sellingProduct = modelMapper.map(s, SellingProduct.class);
                 this.productRepo.saveAndFlush(sellingProduct);
             });
-
-            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        catch (IllegalArgumentException e) {
+            throw new ProductAlreadyExists("Product with id : %s already exists!", e.getMessage());
         }
     }
 

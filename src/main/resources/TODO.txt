@@ -1,0 +1,10 @@
+TODO List:
+Search bar -> searching by everything with a filter and also suggestions(hard one)
+
+Make descrption hover multiline not on one row only.
+
+Decide action in which table(selling or scrap) to go an element
+
+Visualization of both selling table and scrap
+
+More simple way to be shown product in preparation(just buttons for decide and id to know which item we are looking for) MAYBE no totally clear idea :)
