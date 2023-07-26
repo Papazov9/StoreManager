@@ -2,9 +2,9 @@ package com.returns.store.storagemanager.service;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
-import com.returns.store.storagemanager.model.entity.Product;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
+import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.repo.SellingProductRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -50,4 +50,24 @@ public class ProductService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<ProductViewModel> getAllProducts(){
+        List<SellingProduct> all = this.productRepo.findAll();
+        return all
+                .stream().map(this::productViewModelMapper).toList();
+    }
+
+    private ProductViewModel productViewModelMapper(SellingProduct product){
+        ProductViewModel productViewModel = this.modelMapper.map(product, ProductViewModel.class);
+
+        if(product.getDescription().length() > 20){
+            productViewModel.setShortenDescription(product.getDescription().substring(0, 21) + "...");
+        }else{
+            productViewModel.setShortenDescription(product.getDescription());
+        }
+
+        return productViewModel;
+
+    }
+
 }

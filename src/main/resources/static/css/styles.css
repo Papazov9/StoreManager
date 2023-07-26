@@ -67,3 +67,9 @@ nav {
 .navbar ul li:hover:after{
     width: 100%;
 }
+
+.productTableDiv {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+}
