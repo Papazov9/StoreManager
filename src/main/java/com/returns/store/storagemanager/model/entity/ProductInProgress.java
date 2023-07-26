@@ -9,7 +9,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 @Entity
 @Table(name = "products_in_progress")
 public class ProductInProgress extends Product{
-    @Column(name = "condition")
+    @Column(name = "product_condition")
     private String condition;
 
     @Column(name = "pallet_Id")
@@ -30,7 +30,7 @@ public class ProductInProgress extends Product{
     @Column(name = "ean")
     private String ean;
 
-    @Column(name = "description", columnDefinition = "LONGTEXT")
+    @Column(name = "product_description", columnDefinition = "LONGTEXT")
     private String description;
 
     @Column(name = "quantity", nullable = false)
