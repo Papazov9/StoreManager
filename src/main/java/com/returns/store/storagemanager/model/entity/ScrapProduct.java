@@ -7,13 +7,10 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name = "products_in_progress")
-public class ProductInProgress extends Product{
+@Table(name = "scrap_products")
+public class ScrapProduct extends Product{
     @Column(name = "product_condition")
     private String condition;
-
-    @Column(name = "pallet_Id")
-    private String palletId;
 
     @Column(name = "department")
     private String department;
@@ -27,9 +24,6 @@ public class ProductInProgress extends Product{
     @Column(name = "asin")
     private String asin;
 
-    @Column(name = "ean")
-    private String ean;
-
     @Column(name = "product_description", columnDefinition = "LONGTEXT")
     private String description;
 
@@ -40,14 +34,14 @@ public class ProductInProgress extends Product{
     @Column(name = "currency_code", nullable = false)
     private String currencyCode;
 
-    @Column(name = "total_retail", nullable = false)
+    @Column(name = "total_retail", nullable = false, columnDefinition = "DECIMAL(19,4)")
     @Positive
     private Double totalRetail;
 
     @Column(name = "lpn")
     private String lpn;
 
-    public ProductInProgress() {
+    public ScrapProduct() {
 
     }
 
@@ -55,17 +49,8 @@ public class ProductInProgress extends Product{
         return condition;
     }
 
-    public ProductInProgress setCondition(String condition) {
+    public ScrapProduct setCondition(String condition) {
         this.condition = condition;
-        return this;
-    }
-
-    public String getPalletId() {
-        return palletId;
-    }
-
-    public ProductInProgress setPalletId(String palletId) {
-        this.palletId = palletId;
         return this;
     }
 
@@ -73,7 +58,7 @@ public class ProductInProgress extends Product{
         return department;
     }
 
-    public ProductInProgress setDepartment(String department) {
+    public ScrapProduct setDepartment(String department) {
         this.department = department;
         return this;
     }
@@ -82,7 +67,7 @@ public class ProductInProgress extends Product{
         return category;
     }
 
-    public ProductInProgress setCategory(String category) {
+    public ScrapProduct setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -91,7 +76,7 @@ public class ProductInProgress extends Product{
         return subCategory;
     }
 
-    public ProductInProgress setSubCategory(String subCategory) {
+    public ScrapProduct setSubCategory(String subCategory) {
         this.subCategory = subCategory;
         return this;
     }
@@ -100,34 +85,25 @@ public class ProductInProgress extends Product{
         return asin;
     }
 
-    public ProductInProgress setAsin(String asin) {
+    public ScrapProduct setAsin(String asin) {
         this.asin = asin;
         return this;
     }
-
-    public String getEan() {
-        return ean;
-    }
-
-    public ProductInProgress setEan(String ean) {
-        this.ean = ean;
-        return this;
-    }
-
 
     public String getDescription() {
         return description;
     }
 
-    public ProductInProgress setDescription(String description) {
+    public ScrapProduct setDescription(String description) {
         this.description = description;
         return this;
     }
+
     public Long getQuantity() {
         return quantity;
     }
 
-    public ProductInProgress setQuantity(Long quantity) {
+    public ScrapProduct setQuantity(Long quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -136,7 +112,7 @@ public class ProductInProgress extends Product{
         return currencyCode;
     }
 
-    public ProductInProgress setCurrencyCode(String currencyCode) {
+    public ScrapProduct setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
         return this;
     }
@@ -145,7 +121,7 @@ public class ProductInProgress extends Product{
         return totalRetail;
     }
 
-    public ProductInProgress setTotalRetail(Double totalRetail) {
+    public ScrapProduct setTotalRetail(Double totalRetail) {
         this.totalRetail = totalRetail;
         return this;
     }
@@ -154,7 +130,7 @@ public class ProductInProgress extends Product{
         return lpn;
     }
 
-    public ProductInProgress setLpn(String lpn) {
+    public ScrapProduct setLpn(String lpn) {
         this.lpn = lpn;
         return this;
     }

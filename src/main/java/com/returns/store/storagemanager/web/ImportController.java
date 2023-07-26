@@ -30,7 +30,7 @@ public class ImportController {
     @PostMapping("/import")
     public String importFile(@RequestParam("file") MultipartFile file) {
         if (productService.importCSVFile(file)) {
-            return "products";
+            return "home";
         }
 
         return "import-error";

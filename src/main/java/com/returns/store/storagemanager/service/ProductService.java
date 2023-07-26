@@ -3,10 +3,11 @@ package com.returns.store.storagemanager.service;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.entity.Product;
-import com.returns.store.storagemanager.model.entity.ProductInProgress;
+import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
-import com.returns.store.storagemanager.repo.ProductInProgressRepo;
+import com.returns.store.storagemanager.repo.SellingProductRepo;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,38 +16,38 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     private final ModelMapper modelMapper;
-    private final ProductInProgressRepo productRepo;
-    public ProductService(ModelMapper modelMapper, ProductInProgressRepo productRepo) {
+    private final SellingProductRepo productRepo;
+    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo) {
         this.modelMapper = modelMapper;
         this.productRepo = productRepo;
     }
 
     public boolean importCSVFile(MultipartFile file) {
+        this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         try (Reader inputStreamReader = new InputStreamReader(file.getInputStream())) {
             List<CSVBindingObject> products = new CsvToBeanBuilder(inputStreamReader)
                     .withType(CSVBindingObject.class)
                     .build()
                     .parse();
 
-            List<ProductInProgress> mappedResultList = products.stream().map(p -> modelMapper.map(p, ProductInProgress.class)).toList();
-
-            mappedResultList.forEach(s -> {
-                Optional<Product> product = this.productRepo.findById(s.getId());
+            products.forEach(s -> {
+                Optional<SellingProduct> product = this.productRepo.findByReturnItemId(s.getReturnItemId());
 
                 if (product.isPresent()) {
-                    throw new ProductAlreadyExists("Product with id : " + s.getId() + "already exists!", s.getId());
+                    throw new ProductAlreadyExists("Product with id : %s already exists!", s.getReturnItemId());
                 }
-                this.productRepo.saveAndFlush(s);
+                SellingProduct sellingProduct = modelMapper.map(s, SellingProduct.class);
+                this.productRepo.saveAndFlush(sellingProduct);
             });
+
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 }

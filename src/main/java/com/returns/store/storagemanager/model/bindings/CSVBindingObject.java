@@ -9,6 +9,9 @@ public class CSVBindingObject {
     @CsvBindByName(column = "CONDITION")
     private String condition;
 
+    @CsvBindByName(column = "ReturnItemID")
+    private String returnItemId;
+
     @CsvBindByName(column = "Pallet ID")
     private String palletId;
 
@@ -52,6 +55,15 @@ public class CSVBindingObject {
 
     public CSVBindingObject setCondition(String condition) {
         this.condition = condition;
+        return this;
+    }
+
+    public String getReturnItemId() {
+        return returnItemId;
+    }
+
+    public CSVBindingObject setReturnItemId(String returnItemId) {
+        this.returnItemId = returnItemId;
         return this;
     }
 

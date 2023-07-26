@@ -2,21 +2,21 @@ package com.returns.store.storagemanager.model.exceptions;
 
 public class ProductAlreadyExists extends RuntimeException {
 
-    private final Long id;
+    private final String id;
 
     private final String message;
 
-    public ProductAlreadyExists(String message, Long id) {
+    public ProductAlreadyExists(String message, String id) {
         this.id = id;
         this.message = message;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
     public String getMessage() {
-        return message;
+        return String.format(message, id);
     }
 }
