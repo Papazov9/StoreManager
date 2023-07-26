@@ -81,22 +81,7 @@ fetch(`http://localhost:8080/api/products`, {
 
                 tableBody.appendChild(row);
 
-                //         tableBody += ` <tr>
-                //     <td>"${product.id}"</td>
-                //     <td>"${product.returnItemId}"</td>
-                //     <td>asin</td>
-                //     <td>category</td>
-                //     <td>condition</td>
-                //     <td>currencyCode</td>
-                //     <td>department</td>
-                //     <td>description</td>
-                //     <td>ean</td>
-                //     <td>lpn</td>
-                //     <td>palletId</td>
-                //     <td>quantity</td>
-                //     <td>subCategory</td>
-                //     <td>totalRetail</td>
-                // </tr>`
+
             }
         }
 
