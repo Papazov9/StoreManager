@@ -4,6 +4,13 @@
     cursor: help;
 }
 
+[data-title]:before,
+[data-title]:after {
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
 [data-title]:hover::before {
     content: attr(data-title);
     position: absolute;
@@ -21,6 +28,12 @@
     left: 8px;
     border: 8px solid transparent;
     border-bottom: 8px solid #000;
-    word-wrap: break-word;
+    white-space: pre-wrap;
+    width: 100px;
+}
+
+[data-title]:hover:after,
+[data-title]:hover:before {
+    display: block;
 }
 

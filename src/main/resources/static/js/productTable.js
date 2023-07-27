@@ -42,7 +42,7 @@ fetch(`http://localhost:8080/api/products`, {
                 department.textContent = product.department;
 
                 let description = document.createElement('th');
-                description.setAttribute("data-title", product.description)
+                description.setAttribute("data-title", product.description);
                 description.textContent = product.shortenDescription;
                 description.style.maxWidth = "20px";
 

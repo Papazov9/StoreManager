@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,48 +23,47 @@ public class ProductService {
 
     private final ModelMapper modelMapper;
     private final SellingProductRepo productRepo;
+
     public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo) {
         this.modelMapper = modelMapper;
         this.productRepo = productRepo;
     }
 
-    public void importCSVFile(MultipartFile file) throws ProductAlreadyExists{
+    public boolean importCSVFile(MultipartFile file) throws ProductAlreadyExists {
         this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        List<CSVBindingObject> products;
         try (Reader inputStreamReader = new InputStreamReader(file.getInputStream())) {
-            List<CSVBindingObject> products = new CsvToBeanBuilder<CSVBindingObject>(inputStreamReader)
+            products = new CsvToBeanBuilder<CSVBindingObject>(inputStreamReader)
                     .withType(CSVBindingObject.class)
                     .build()
                     .parse();
-
-            products.forEach(s -> {
-                Optional<SellingProduct> product = this.productRepo.findByReturnItemId(s.getReturnItemId());
-
-                if (product.isPresent()) {
-                    throw new IllegalArgumentException(s.getReturnItemId());
-                }
-                SellingProduct sellingProduct = modelMapper.map(s, SellingProduct.class);
-                this.productRepo.saveAndFlush(sellingProduct);
-            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        catch (IllegalArgumentException e) {
-            throw new ProductAlreadyExists("Product with id : %s already exists!", e.getMessage());
+        for (CSVBindingObject s : products) {
+            Optional<SellingProduct> product = this.productRepo.findByReturnItemId(s.getReturnItemId());
+
+            if (product.isPresent()) {
+                throw new ProductAlreadyExists("Product with id : %s already exists!", s.getReturnItemId());
+            }
+            SellingProduct sellingProduct = modelMapper.map(s, SellingProduct.class);
+            this.productRepo.saveAndFlush(sellingProduct);
         }
+        return true;
     }
 
-    public List<ProductViewModel> getAllProducts(){
+    public List<ProductViewModel> getAllProducts() {
         List<SellingProduct> all = this.productRepo.findAll();
         return all
                 .stream().map(this::productViewModelMapper).toList();
     }
 
-    private ProductViewModel productViewModelMapper(SellingProduct product){
+    private ProductViewModel productViewModelMapper(SellingProduct product) {
         ProductViewModel productViewModel = this.modelMapper.map(product, ProductViewModel.class);
 
-        if(product.getDescription().length() > 20){
+        if (product.getDescription().length() > 20) {
             productViewModel.setShortenDescription(product.getDescription().substring(0, 21) + "...");
-        }else{
+        } else {
             productViewModel.setShortenDescription(product.getDescription());
         }
 
