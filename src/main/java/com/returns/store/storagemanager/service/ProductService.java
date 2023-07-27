@@ -2,9 +2,11 @@ package com.returns.store.storagemanager.service;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
+import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
+import com.returns.store.storagemanager.repo.ProductSpecification;
 import com.returns.store.storagemanager.repo.SellingProductRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -69,6 +71,16 @@ public class ProductService {
 
         return productViewModel;
 
+    }
+
+
+    public List<ProductViewModel> searchProduct(SearchProductBinding productBinding){
+        List<ProductViewModel> productViewModels = this.productRepo
+                .findAll(new ProductSpecification(productBinding))
+                .stream()
+                .map(this::productViewModelMapper)
+                .toList();
+        return productViewModels;
     }
 
 }

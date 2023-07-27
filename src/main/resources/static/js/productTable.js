@@ -19,6 +19,15 @@ fetch(`http://localhost:8080/api/products`, {
 
                 let row = document.createElement('tr');
 
+                let buttonCol = document.createElement('th');
+                let button = document.createElement('button');
+                button.setAttribute("type", "button");
+                button.setAttribute("id", "btnMSb");
+                button.setAttribute("onClick", "toggle(this.id,'" + product.returnItemId + "');");
+                button.setAttribute("aria-controls", product.returnItemId);
+                button.setAttribute("aria-labelledby", "tnMSb lblMSb");
+                buttonCol.appendChild(button);
+
                 let idCol = document.createElement('th');
                 idCol.textContent = product.id;
 
@@ -65,6 +74,7 @@ fetch(`http://localhost:8080/api/products`, {
                 let totalRetail = document.createElement('th');
                 totalRetail.textContent = product.totalRetail;
 
+                row.appendChild(buttonCol)
                 row.appendChild(idCol);
                 row.appendChild(returnItemId);
                 row.appendChild(asin);
@@ -88,3 +98,31 @@ fetch(`http://localhost:8080/api/products`, {
 
 
     })
+
+
+function toggle(btnID, eIDs) {
+    console.log("here")
+    // Feed the list of ids as a selector
+    var theRows = document.querySelectorAll(eIDs);
+    // Get the button that triggered this
+    var theButton = document.getElementById(btnID);
+    // If the button is not expanded...
+    if (theButton.getAttribute("aria-expanded") == "false") {
+        // Loop through the rows and show them
+        for (var i = 0; i < theRows.length; i++) {
+            theRows[i].classList.add("shown");
+            theRows[i].classList.remove("hidden");
+        }
+        // Now set the button to expanded
+        theButton.setAttribute("aria-expanded", "true");
+        // Otherwise button is not expanded...
+    } else {
+        // Loop through the rows and hide them
+        for (var i = 0; i < theRows.length; i++) {
+            theRows[i].classList.add("hidden");
+            theRows[i].classList.remove("shown");
+        }
+        // Now set the button to collapsed
+        theButton.setAttribute("aria-expanded", "false");
+    }
+}
