@@ -37,3 +37,27 @@
     display: block;
 }
 
+
+tr.shown, tr.hidden {
+    background-color: #eee;
+    display: table-row;
+}
+
+tr.hidden {
+    display: none;
+}
+
+tr.shown{
+    display: block;
+}
+
+.background-btn{
+    background: url("../img/magnifier.png") no-repeat;
+    height: 30px;
+    width: 30px;
+}
+
+.background-btn:hover{
+    background: #dedcd9;
+}
+
