@@ -7,6 +7,7 @@ import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.repo.ProductSpecification;
+import com.returns.store.storagemanager.repo.ScrapProductsRepo;
 import com.returns.store.storagemanager.repo.SellingProductRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +25,12 @@ public class ProductService {
 
     private final ModelMapper modelMapper;
     private final SellingProductRepo productRepo;
+    private final ScrapProductsRepo scrapProductsRepo;
 
-    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo) {
+    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo, ScrapProductsRepo scrapProductsRepo) {
         this.modelMapper = modelMapper;
         this.productRepo = productRepo;
+        this.scrapProductsRepo = scrapProductsRepo;
     }
 
     public boolean importCSVFile(MultipartFile file) throws ProductAlreadyExists {
@@ -59,6 +61,8 @@ public class ProductService {
         return all
                 .stream().map(this::productViewModelMapper).toList();
     }
+
+
 
     private ProductViewModel productViewModelMapper(SellingProduct product) {
         ProductViewModel productViewModel = this.modelMapper.map(product, ProductViewModel.class);
