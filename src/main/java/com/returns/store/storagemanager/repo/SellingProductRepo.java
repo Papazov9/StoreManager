@@ -1,8 +1,6 @@
 package com.returns.store.storagemanager.repo;
 
-import com.returns.store.storagemanager.model.entity.ScrapProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
