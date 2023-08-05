@@ -12,6 +12,9 @@ public class ScrapProduct extends Product{
     @Column(name = "product_condition")
     private String condition;
 
+    @Column(name = "pallet_Id")
+    private String palletId;
+
     @Column(name = "department")
     private String department;
 
@@ -41,8 +44,20 @@ public class ScrapProduct extends Product{
     @Column(name = "lpn")
     private String lpn;
 
+    @Column(name = "ean")
+    private String ean;
+
     public ScrapProduct() {
 
+    }
+
+    public String getEan() {
+        return ean;
+    }
+
+    public ScrapProduct setEan(String ean) {
+        this.ean = ean;
+        return this;
     }
 
     public String getCondition() {
@@ -51,6 +66,15 @@ public class ScrapProduct extends Product{
 
     public ScrapProduct setCondition(String condition) {
         this.condition = condition;
+        return this;
+    }
+
+    public String getPalletId() {
+        return palletId;
+    }
+
+    public ScrapProduct setPalletId(String palletId) {
+        this.palletId = palletId;
         return this;
     }
 

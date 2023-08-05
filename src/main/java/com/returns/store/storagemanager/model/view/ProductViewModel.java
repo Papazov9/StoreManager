@@ -32,7 +32,11 @@ public class ProductViewModel {
     }
 
     public ProductViewModel setShortenDescription(String shortenDescription) {
-        this.shortenDescription = shortenDescription;
+        if (shortenDescription.length() > 20) {
+            this.shortenDescription = shortenDescription.substring(0, 21) + "...";
+        } else {
+            this.shortenDescription = shortenDescription;
+        }
         return this;
     }
 
@@ -167,6 +171,24 @@ public class ProductViewModel {
     public ProductViewModel() {
     }
 
-
-
+    @Override
+    public String toString() {
+        return "ProductViewModel{" +
+                "id=" + id +
+                ", returnItemId='" + returnItemId + '\'' +
+                ", condition='" + condition + '\'' +
+                ", palletId='" + palletId + '\'' +
+                ", department='" + department + '\'' +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", asin='" + asin + '\'' +
+                ", ean='" + ean + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", totalRetail=" + totalRetail +
+                ", shortenDescription='" + shortenDescription + '\'' +
+                ", lpn='" + lpn + '\'' +
+                '}';
+    }
 }

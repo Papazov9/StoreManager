@@ -2,6 +2,7 @@ package com.returns.store.storagemanager.web;
 
 
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
+import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -28,6 +31,12 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/scrap")
+    private String scrapProducts(Model model) {
+        model.addAttribute("scrapProducts", productService.getScrapProducts());
+        return "scrapProducts";
+    }
+
     @GetMapping("/search")
     private String searchProduct(@Valid SearchProductBinding productBinding,
                                  BindingResult bindingResult,
@@ -43,6 +52,7 @@ public class ProductController {
 
         if(!productBinding.isEmpty()){
             model.addAttribute("productsFound", this.productService.searchProduct(productBinding));
+
         }
 
         System.out.println(productBinding);

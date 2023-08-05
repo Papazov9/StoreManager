@@ -3,6 +3,7 @@ package com.returns.store.storagemanager.service;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
+import com.returns.store.storagemanager.model.entity.ScrapProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
@@ -59,32 +60,29 @@ public class ProductService {
     public List<ProductViewModel> getAllProducts() {
         List<SellingProduct> all = this.productRepo.findAll();
         return all
-                .stream().map(this::productViewModelMapper).toList();
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
+                .map(p -> p.setShortenDescription(p.getDescription())).toList();
     }
 
-
-
-    private ProductViewModel productViewModelMapper(SellingProduct product) {
-        ProductViewModel productViewModel = this.modelMapper.map(product, ProductViewModel.class);
-
-        if (product.getDescription().length() > 20) {
-            productViewModel.setShortenDescription(product.getDescription().substring(0, 21) + "...");
-        } else {
-            productViewModel.setShortenDescription(product.getDescription());
-        }
-
-        return productViewModel;
-
-    }
 
 
     public List<ProductViewModel> searchProduct(SearchProductBinding productBinding){
         List<ProductViewModel> productViewModels = this.productRepo
                 .findAll(new ProductSpecification(productBinding))
                 .stream()
-                .map(this::productViewModelMapper)
+                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
+                .map(p -> p.setShortenDescription(p.getDescription()))
                 .toList();
         return productViewModels;
     }
 
+    public List<ProductViewModel> getScrapProducts() {
+        List<ScrapProduct> all = this.scrapProductsRepo.findAll();
+        return all
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
+                .map(p -> p.setShortenDescription(p.getDescription()))
+                .toList();
+    }
 }

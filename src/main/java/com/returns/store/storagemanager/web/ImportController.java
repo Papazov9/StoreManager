@@ -11,7 +11,6 @@ import java.io.File;
 
 @Controller
 @RequestMapping("/returns")
-///returns/import
 public class ImportController {
 
     private final ProductService productService;
@@ -29,7 +28,7 @@ public class ImportController {
     @PostMapping("/import")
     public String importFile(@RequestParam("file") MultipartFile file) throws ProductAlreadyExists{
         productService.importCSVFile(file);
-        return "products";
+        return "redirect:/products/progress";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
