@@ -15,12 +15,12 @@
 </div>
 
 <div class="container">
-    <h2 class="text-center text-danger m-2">Search for products</h2>
+    <h2 class="text-center text-danger mt-2">Search for products</h2>
     <form
             th:method="GET"
             th:action="@{/products/search}"
             th:object="${productBinding}"
-            class="form-inline" style="justify-content: center; margin-top: 50px; margin-bottom: 10px">
+            class="form-inline" style="justify-content: center; margin-top: 20px; margin-bottom: 10px">
 
         <div style="position: relative">
 
@@ -115,11 +115,33 @@
     </form>
 </div>
 
-<div>
-    <!--    Тук е за намерени продукти ! Но тъй като не намира никакви не работи :) -->
-    <table class="table table-striped table-bordered table-sm">
+<div  th:if="${productsFound.size() != 0}" class="m-2">
+    <h3 class="text-center text-danger">Products Found</h3>
+    <table  class="table table-striped table-bordered table-sm">
         <thead>
-        <tr th:each="p: ${productsFound}">
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Return Item Id</th>
+            <th>ASIN</th>
+            <th>Category</th>
+            <th>Product Condition</th>
+            <th>Currency Code</th>
+            <th>Department</th>
+            <th>Product Description</th>
+            <th>EAN</th>
+            <th>LPN</th>
+            <th>Pallet ID</th>
+            <th>quantity</th>
+            <th>Sub Category</th>
+            <th>Total Retail</th>
+
+
+        </tr>
+        </thead>
+        <tbody >
+        <tr  th:each="p: ${productsFound}">
+            <th></th>
             <th th:text="${p.id}">ID</th>
             <th th:text="${p.returnItemId}">Return Item Id</th>
             <th th:text="${p.asin}">ASIN</th>
@@ -127,7 +149,7 @@
             <th th:text="${p.condition}">Product Condition</th>
             <th th:text="${p.currencyCode}">Currency Code</th>
             <th th:text="${p.department}">Department</th>
-            <th th:text="${p.description}">Product Description</th>
+            <th th:text="${p.shortenDescription}">Product Description</th>
             <th th:text="${p.ean}">EAN</th>
             <th th:text="${p.lpn}">LPN</th>
             <th th:text="${p.palletId}">Pallet ID</th>
@@ -136,14 +158,18 @@
             <th th:text="${p.totalRetail}">Total Retail</th>
 
         </tr>
-        </thead>
-        <tbody>
-
         </tbody>
+
     </table>
 </div>
 
+<div th:if="${noProductsFound}">
+    <h4 class="text-center text-danger">No products were found !</h4>
+</div>
+
 <div class="productTableDiv">
+
+    <h3 class="text-center text-danger m-4">Products in progress</h3>
 
     <table id="productsTable" class="table table-striped table-bordered table-sm cell">
         <thead>

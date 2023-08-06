@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,11 +52,17 @@ public class ProductController {
         }
 
         if(!productBinding.isEmpty()){
-            model.addAttribute("productsFound", this.productService.searchProduct(productBinding));
+            List<ProductViewModel> productsFound = this.productService.searchProduct(productBinding);
+
+            if(productsFound.size() > 0){
+                redirectAttributes.addFlashAttribute("productsFound", productsFound);
+            }else{
+                redirectAttributes.addFlashAttribute("noProductsFound", true);
+
+            }
 
         }
 
-        System.out.println(productBinding);
         return "redirect:/products/progress";
 
     }
@@ -64,5 +71,11 @@ public class ProductController {
     public SearchProductBinding productBinding(){
         return new SearchProductBinding();
     }
+
+    @ModelAttribute("productsFound")
+    public List<ProductViewModel> productsFound(){
+        return new ArrayList<>();
+    }
+
 
 }
