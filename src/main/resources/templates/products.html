@@ -25,6 +25,7 @@
         <div style="position: relative">
 
             <input
+                    sec:authorize='hasRole("ADMIN")'
                     th:field="*{returnItemId}"
                     name="returnItemId"
                     class="form-control mr-sm-2" style="width: 120px;"
@@ -44,6 +45,7 @@
                     id="asin">
 
             <input
+                    sec:authorize='hasRole("ADMIN")'
                     th:field="*{category}"
                     name="category"
                     class="form-control mr-sm-2"
@@ -54,6 +56,7 @@
                     id="category">
 
             <input
+                    sec:authorize='hasRole("ADMIN")'
                     th:field="*{condition}"
                     name="condition"
                     class="form-control mr-sm-2"
@@ -64,6 +67,7 @@
                     id="condition">
 
             <input
+                    sec:authorize='hasRole("ADMIN")'
                     th:field="*{department}"
                     name="department"
                     class="form-control mr-sm-2"
@@ -94,6 +98,7 @@
                     id="lpn">
 
             <input
+                    sec:authorize='hasRole("ADMIN")'
                     th:field="*{palletId}"
                     name="palletId"
                     class="form-control mr-sm-2"
