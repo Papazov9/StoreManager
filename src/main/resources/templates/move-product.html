@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="/css/move.css">
+  <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<div>
+  <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
+  <form id="regForm" th:action="@{/products/move/${productId}}" th:data="${productId}">
+
+    <h1>Move:</h1>
+
+    <div class="tab">
+      <label for="productType">Choose type of product:</label>
+        <select id="productType" name="productType">
+          <option value="sell">Sell</option>
+          <option value="fix">Fix</option>
+          <option value="scrap">Scrap</option>
+        </select>
+
+    </div>
+
+    <div class="tab">Choose size of product:
+      <label for="productSize">Choose size of product:</label>
+      <select id="productSize" name="productSize">
+        <option value="small">Small</option>
+        <option value="big">Big</option>
+      </select>
+    </div>
+
+    <div class="tab">Choose Rack:
+      <p><input placeholder="dd" oninput="this.className = ''"></p>
+      <p><input placeholder="mm" oninput="this.className = ''"></p>
+      <p><input placeholder="yyyy" oninput="this.className = ''"></p>
+    </div>
+
+    <div style="overflow:auto;">
+      <div style="float:right;">
+        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+      </div>
+    </div>
+
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+
+  </form>
+</div>
+<th:block th:replace="~{fragments/common::footer}"></th:block>
+<script src="/js/moveProduct.js"></script>
+</body>
+</html>

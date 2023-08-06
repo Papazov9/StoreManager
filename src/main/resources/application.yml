@@ -6,12 +6,13 @@ spring:
     username: root
     password: Dragalevtsi#123
   jpa:
-    #     Choose either MySQL 8 or MySQL 5 below
-    #    For MySQL 8:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
     defer-datasource-initialization: true
+    open-in-view: false
+    show-sql: true
   mvc:
     hidden-method:
       filter:

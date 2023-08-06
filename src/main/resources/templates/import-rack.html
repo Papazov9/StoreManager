@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return Admin panel</title>
+  <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<div>
+  <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
+</div>
+
+<form th:method="POST" th:action="@{/returns/import/rack}" th:object="${rackBinding}">
+  <div class="form-group">
+    <label for="rackName" class="h4 mb-2 text-dark">Rack Name:</label>
+      <input type="text" name="rackName" id="rackName" class="form-control my-4 py-2"
+         th:field="*{rackName}"
+         placeholder="Rack name"/>
+  <small th:if="${#fields.hasErrors('rackName')}"
+         th:errors="*{rackName}"
+         class="bg-danger text-light rounded">
+    At least one symbol and maximum 2!
+  </small>
+  </div>
+  <div class="form-group">
+    <label for="quantity" class="h4 mb-2 text-dark">Quantity:</label>
+  <input type="number" name="quantity" id="quantity" class="form-control my-4 py-2"
+         th:field="*{quantity}"
+         placeholder="Quantity"/>
+  <small th:if="${#fields.hasErrors('quantity')}"
+         th:errors="*{quantity}"
+         class="bg-danger text-light rounded">
+    The quantity must be positive number.
+  </small>
+  </div>
+  <div class="form-group">
+    <div class="label-holder textCol d-flex justify-content-center">
+      <label for="type" class="h4 mb-2 text-dark">Select rack type:</label>
+    </div>
+    <select class="form-control" name="type" id="type">
+      <option value="">Select size type</option>
+      <option th:each="c : ${T(com.returns.store.storagemanager.model.enums.SizeEnum).values()}" th:value="${c.name()}" th:text="${c.name()}">...</option>
+    </select>
+    <small th:if="${#fields.hasErrors('type')}"
+           th:errors="*{type}"
+           class="bg-danger text-light rounded">
+      Cannot be empty!</small>
+  </div>
+  <div class="text-center mt-3">
+    <button class="btn btn-danger">Add New Rack</button>
+  </div>
+</form>
+
+<th:block th:replace="~{fragments/common::footer}"></th:block>
+</body>
+</html>

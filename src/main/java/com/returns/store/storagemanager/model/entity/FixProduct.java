@@ -7,10 +7,8 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name = "scrap_products")
-public class ScrapProduct extends Product{
+@Table(name = "products_for_fix")
+public class FixProduct extends Product{
 
-    public ScrapProduct() {
-
-    }
+    public FixProduct() {}
 }

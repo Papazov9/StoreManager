@@ -1,6 +1,7 @@
 package com.returns.store.storagemanager.service;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.returns.store.storagemanager.model.exceptions.ProductNotFoundException;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.ScrapProduct;
@@ -77,12 +78,7 @@ public class ProductService {
         return productViewModels;
     }
 
-    public List<ProductViewModel> getScrapProducts() {
-        List<ScrapProduct> all = this.scrapProductsRepo.findAll();
-        return all
-                .stream()
-                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
-                .map(p -> p.setShortenDescription(p.getDescription()))
-                .toList();
+    public SellingProduct findProductById(Long id) {
+        return this.productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 }
