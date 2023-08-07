@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit product</title>
+  <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<header>
+  <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
+</header>
+
+<main>
+  <h1 class="text-center mt-2"><span class="badge badge-pill badge-danger">Edit product</span></h1>
+
+  <form th:object="${productModel}" class="mx-auto w-25 bg-blur rounded" th:method="POST" th:action="@{/products/edit/{id}(id=*{id})}">
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="returnItemId" class="h4 mb-2 text-dark">Return Item Id</label>
+      </div>
+      <input th:field="*{returnItemId}" th:errorclass="bg-warning" type="text" class="form-control" id="returnItemId" name="returnItemId"/>
+      <small th:if="${#fields.hasErrors('returnItemId')}"
+             th:errors="*{returnItemId}"
+             class="bg-gray text-light rounded">
+        The Return Item id field should not be empty.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="condition" class="h4 mb-2 text-dark">Condition</label>
+      </div>
+      <input th:field="*{condition}" th:errorclass="bg-warning" type="text" name="condition" class="form-control" id="condition"/>
+      <small th:if="${#fields.hasErrors('condition')}"
+             th:errors="*{condition}"
+             class="bg-gray text-light rounded">
+        The Condition field should not be empty.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="lpn" class="h4 mb-2 text-dark">Condition</label>
+      </div>
+      <input th:field="*{lpn}" th:errorclass="bg-warning" type="text" name="lpn" class="form-control" id="lpn"/>
+      <small th:if="${#fields.hasErrors('lpn')}"
+             th:errors="*{lpn}"
+             class="bg-gray text-light rounded">
+        The LPN field should not be empty.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="palletId" class="h4 mb-2 text-dark">Pallet Id</label>
+      </div>
+      <input th:field="*{palletId}" th:errorclass="bg-warning" type="text" name="palletId" class="form-control" id="palletId"/>
+      <small th:if="${#fields.hasErrors('palletId')}"
+             th:errors="*{palletId}"
+             class="bg-gray text-light rounded">
+        The Pallet id field should not be empty.
+      </small>
+    </div>
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="department" class="h4 mb-2 text-dark">Department</label>
+      </div>
+      <input th:field="*{department}" th:errorclass="bg-warning" type="text" name="department" class="form-control" id="department"/>
+      <small th:if="${#fields.hasErrors('department')}"
+             th:errors="*{department}"
+             class="bg-gray text-light rounded">
+        The Department field should not be empty.
+      </small>
+    </div>
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="asin" class="h4 mb-2 text-dark">ASIN</label>
+      </div>
+      <input th:field="*{asin}" th:errorclass="bg-warning" type="text" name="asin" class="form-control" id="asin"/>
+      <small th:if="${#fields.hasErrors('asin')}"
+             th:errors="*{asin}"
+             class="bg-gray text-light rounded">
+        The ASIN field should not be empty.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="category" class="h4 mb-2 text-dark">Category</label>
+      </div>
+      <input th:field="*{category}" th:errorclass="bg-warning" type="text" name="category" class="form-control" id="category"/>
+      <small th:if="${#fields.hasErrors('category')}"
+             th:errors="*{category}"
+             class="bg-gray text-light rounded">
+        The Category field should not be empty.
+      </small>
+    </div>
+
+    <div class="form-group">
+    <div class="label-holder textCol d-flex justify-content-center">
+      <label for="subCategory" class="h4 mb-2 text-dark">SubCategory</label>
+    </div>
+    <input th:field="*{subCategory}" th:errorclass="bg-warning" type="text" name="subCategory" class="form-control" id="subCategory"/>
+    <small th:if="${#fields.hasErrors('subCategory')}"
+           th:errors="*{subCategory}"
+           class="bg-gray text-light rounded">
+      The SubCategory field should not be empty.
+    </small>
+  `</div>
+    <div class="form-group">
+    <div class="label-holder textCol d-flex justify-content-center">
+      <label for="ean" class="h4 mb-2 text-dark">EAN</label>
+    </div>
+    <input th:field="*{ean}" th:errorclass="bg-warning" type="text" name="ean" class="form-control" id="ean"/>
+    <small th:if="${#fields.hasErrors('ean')}"
+           th:errors="*{ean}"
+           class="bg-gray text-light rounded">
+      The EAN field should not be empty.
+    </small>
+  </div>`
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="description" class="h4 mb-2 text-dark">Description</label>
+      </div>
+      <textarea th:field="*{description}" id="description" name="description" class="form-control">
+
+            </textarea>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="quantity" class="h4 mb-2 text-dark">Quantity</label>
+      </div>
+      <input th:field="*{quantity}" th:errorclass="bg-warning" type="number" name="quantity" step="1" class="form-control" id="quantity"/>
+      <small th:if="${#fields.hasErrors('quantity')}"
+             th:errors="*{quantity}"
+             class="bg-gray text-light rounded">
+        The quantity should be positive number or zero.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="currencyCode" class="h4 mb-2 text-dark">Currency Code</label>
+      </div>
+      <input th:field="*{currencyCode}" th:errorclass="bg-warning" type="text" name="currencyCode" class="form-control" id="currencyCode"/>
+      <small th:if="${#fields.hasErrors('currencyCode')}"
+             th:errors="*{currencyCode}"
+             class="bg-gray text-light rounded">
+        Currency code should be exactly 3 letters long!
+      </small>
+    </div>
+
+    <div class="form-group">
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="totalRetail" class="h4 mb-2 text-dark">Total Retail</label>
+      </div>
+      <input th:field="*{totalRetail}" th:errorclass="bg-warning" type="number" name="totalRetail" step="0.01" class="form-control" id="totalRetail"/>
+      <small th:if="${#fields.hasErrors('totalRetail')}"
+             th:errors="*{totalRetail}"
+             class="bg-gray text-light rounded">
+        The total retail price should be positive number.
+      </small>
+    </div>
+
+    <div class="button-holder d-flex justify-content-center">
+      <button type="submit" class="btn btn-warning rounded-1 mb-3">Edit</button>
+    </div>
+
+  </form>
+</main>
+</body>
+</html>

@@ -227,22 +227,22 @@
             <tr th:id="'optionsRow' + ${p.id}" class="hidden">
                 <th>
                     <a type="button"
-                       th:id="'deleteBtn' + ${p.id}"
-                       class="btn btn-danger"
-                       th:href="@{/products/delete/{id}(id = *{p.id})}">DELETE</a>
+                       th:id="'deleteBtn'"
+                       th:data-id="${p.id}"
+                       class="btn btn-danger text-white">DELETE</a>
 
                 </th>
                 <th></th>
                 <th>
                     <a type="button"
-                       th:id="'editBtn' + ${p.id}"
+                       th:id="'editBtn'"
                        class="btn btn-danger"
                        th:href="@{/products/edit/{id}(id = *{p.id})}">EDIT</a>
                 </th>
                 <th></th>
                 <th>
                     <a type="button"
-                       th:id="'moveBtn' + ${p.id}"
+                       th:id="'moveBtn'"
                        class="btn btn-danger"
                        th:href="@{/products/move/{id}(id = *{p.id})}">MOVE</a>
                 </th>

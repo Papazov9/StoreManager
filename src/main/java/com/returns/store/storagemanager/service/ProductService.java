@@ -1,10 +1,10 @@
 package com.returns.store.storagemanager.service;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.returns.store.storagemanager.model.bindings.EditBindingModel;
 import com.returns.store.storagemanager.model.exceptions.ProductNotFoundException;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
-import com.returns.store.storagemanager.model.entity.ScrapProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
@@ -66,6 +66,9 @@ public class ProductService {
                 .map(p -> p.setShortenDescription(p.getDescription())).toList();
     }
 
+    public boolean isProductExists(Long id) {
+        return this.productRepo.findById(id).isPresent();
+    }
 
 
     public List<ProductViewModel> searchProduct(SearchProductBinding productBinding){
@@ -80,5 +83,30 @@ public class ProductService {
 
     public SellingProduct findProductById(Long id) {
         return this.productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    public void deleteProductById(Long id) {
+        //check if exists
+        SellingProduct productById = this.findProductById(id);
+        this.productRepo.deleteById(productById.getId());
+    }
+
+    public void editProduct(Long id, EditBindingModel editBindingModel) {
+        SellingProduct productById = findProductById(id);
+        productById.setAsin(editBindingModel.getAsin())
+                .setCategory(editBindingModel.getCategory())
+                .setCondition(editBindingModel.getCondition())
+                .setDepartment(editBindingModel.getDepartment())
+                .setEan(editBindingModel.getEan())
+                .setCurrencyCode(editBindingModel.getCurrencyCode())
+                .setDescription(editBindingModel.getDescription())
+                .setLpn(editBindingModel.getLpn())
+                .setReturnItemId(editBindingModel.getReturnItemId())
+                .setQuantity(editBindingModel.getQuantity())
+                .setTotalRetail(editBindingModel.getTotalRetail())
+                .setSubCategory(editBindingModel.getSubCategory())
+                .setPalletId(editBindingModel.getPalletId());
+
+        this.productRepo.saveAndFlush(productById);
     }
 }

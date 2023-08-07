@@ -1,4 +1,24 @@
+let deleteBtn = document.getElementById("deleteBtn");
+let csrfHeaderKey = document.head.querySelector('[name=_csrf_header]').content;
+let csrfHeaderValue = document.head.querySelector('[name=_csrf]').content;
 
+deleteBtn.addEventListener('click', onDelete);
+
+async function onDelete(event) {
+   let productId =  event.target.getAttribute("data-id");
+   let text = "Are you sure you want to delete this product?";
+   if (confirm(text)) {
+       await fetch(`http://localhost:8080/products/delete/${productId}`,{
+           method: 'DELETE',
+           headers: {
+               'Content-Type': 'application/json',
+               'Accept': 'application/json',
+               [csrfHeaderKey]: csrfHeaderValue
+           }
+       });
+       window.location.replace("http://localhost:8080/products/successful-delete");
+   }
+}
 function toggle(btnID, eIDs) {
 
     var theRows = document.querySelectorAll(eIDs);
