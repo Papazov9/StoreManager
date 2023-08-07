@@ -1,10 +1,16 @@
 package com.returns.store.storagemanager.web;
 
+import com.returns.store.storagemanager.model.entity.Rack;
+import com.returns.store.storagemanager.model.enums.SizeEnum;
 import com.returns.store.storagemanager.model.view.RackViewModel;
+import com.returns.store.storagemanager.model.view.RackViewResponseEntity;
 import com.returns.store.storagemanager.service.RackService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -25,5 +31,21 @@ public class RackController {
         model.addAttribute("allRacks", this.rackService.getAllRacks());
 
         return "all-racks";
+    }
+
+    @GetMapping("/getFirstFree/{productSize}")
+    public ResponseEntity<RackViewResponseEntity> getFirstFree(@PathVariable String productSize) {
+
+        RackViewResponseEntity result = this.rackService.findFirstFreeRackNumberBySize(SizeEnum.valueOf(productSize));
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/findSuitable/{productSize}/{rackName}/{rackNumber}")
+    public ResponseEntity<RackViewResponseEntity> findSuitable(@PathVariable String productSize, @PathVariable String rackName, @PathVariable int rackNumber) {
+
+        RackViewResponseEntity result = this.rackService.findDifferentRackNumber(SizeEnum.valueOf(productSize), rackName, rackNumber);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

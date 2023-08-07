@@ -29,11 +29,6 @@ nav {
     transition: 0.4s all linear;
 }
 
-.navbar-inverse .navbar-nav li a:hover {
-    background-color: indianred;
-    transition: 0.4s;
-}
-
 .logo {
     width: 120px;
     cursor: pointer;
@@ -49,23 +44,7 @@ nav {
 
 .navbar ul li a{
     text-decoration: none;
-    color: white;
     text-transform: uppercase;
-}
-
-.navbar ul li::after{
-    content: '';
-    height: 3px;
-    width: 0;
-    background: blue;
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    transition: 0.5s;
-}
-
-.navbar ul li:hover:after{
-    width: 100%;
 }
 
 .productTableDiv {

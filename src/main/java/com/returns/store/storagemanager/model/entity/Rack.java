@@ -38,6 +38,7 @@ public class Rack {
 
     public boolean addProduct(SellingProduct product) {
         if (this.products.size() == this.quantity){
+            this.nextFree = -1;
             return false;
         }
         else {

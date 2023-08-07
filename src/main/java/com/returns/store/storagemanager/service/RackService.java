@@ -3,7 +3,9 @@ package com.returns.store.storagemanager.service;
 import com.returns.store.storagemanager.model.bindings.RackBinding;
 import com.returns.store.storagemanager.model.entity.Rack;
 import com.returns.store.storagemanager.model.enums.SizeEnum;
+import com.returns.store.storagemanager.model.exceptions.AllRacksAreFullException;
 import com.returns.store.storagemanager.model.view.RackViewModel;
+import com.returns.store.storagemanager.model.view.RackViewResponseEntity;
 import com.returns.store.storagemanager.repo.RackRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,34 @@ public class RackService {
                 .stream()
                 .map(r -> this.modelMapper.map(r, RackViewModel.class))
                 .toList();
+    }
+
+    public RackViewResponseEntity findFirstFreeRackNumberBySize(SizeEnum size) {
+        List<Rack> allRackBySize = this.rackRepo.findAllBySizeOrderByRackNameAsc(size);
+        allRackBySize = allRackBySize
+                .stream()
+                .filter(r -> r.getNextFree() != -1)
+                .toList();
+
+        if (allRackBySize.size() == 0)
+        {
+            throw new AllRacksAreFullException(size);
+        }
+        RackViewResponseEntity result = new RackViewResponseEntity();
+        result.setRackName(allRackBySize.get(0).getRackName());
+        result.setRackNumber(allRackBySize.get(0).getNextFree());
+        return result;
+    }
+
+    public RackViewResponseEntity findDifferentRackNumber(SizeEnum valueOf, String rackName, int rackNumber) {
+        Rack rack = this.rackRepo.findByRackName(rackName).get();
+        RackViewResponseEntity result = new RackViewResponseEntity();
+        if (rackNumber < rack.getQuantity()) {
+            result.setRackName(rackName);
+            result.setRackNumber(rackNumber + 1);
+            return result;
+        }
+
+        return null;
     }
 }

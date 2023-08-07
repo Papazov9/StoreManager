@@ -39,6 +39,9 @@ public class ImportController {
     @GetMapping("/import/rack")
     public String importRack(){return "import-rack";}
 
+    @GetMapping("/import/error")
+    public String importError(){return "import-error";}
+
     @PostMapping("/import/rack")
     public String importRack(@Valid RackBinding rackBinding, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || this.rackService.isRackExists(rackBinding)) {
