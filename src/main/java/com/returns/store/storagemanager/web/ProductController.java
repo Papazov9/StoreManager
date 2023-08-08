@@ -3,9 +3,11 @@ package com.returns.store.storagemanager.web;
 
 import com.returns.store.storagemanager.model.bindings.EditBindingModel;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
+import com.returns.store.storagemanager.model.entity.InProgressProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.service.FixProductService;
+import com.returns.store.storagemanager.service.InProgressProductService;
 import com.returns.store.storagemanager.service.ProductService;
 import com.returns.store.storagemanager.service.ScrapProductService;
 import jakarta.validation.Valid;
@@ -24,37 +26,47 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    private final InProgressProductService inProgressProductService;
     private final FixProductService fixProductService;
     private final ScrapProductService scrapProductService;
     private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, FixProductService fixProductService, ScrapProductService scrapProductService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, InProgressProductService inProgressProductService, FixProductService fixProductService, ScrapProductService scrapProductService, ModelMapper modelMapper) {
         this.productService = productService;
+        this.inProgressProductService = inProgressProductService;
         this.fixProductService = fixProductService;
         this.scrapProductService = scrapProductService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/progress")
-    private String products(Model model) {
-        model.addAttribute("allProducts", productService.getAllProducts());
+    public String products(Model model) {
+        model.addAttribute("allProducts", inProgressProductService.getAllProducts());
         return "products";
     }
 
     @GetMapping("/scrap")
-    private String scrapProducts(Model model) {
+    public String scrapProducts(Model model) {
         model.addAttribute("scrapProducts", scrapProductService.getScrapProducts());
         return "scrapProducts";
     }
 
     @GetMapping("/fix")
-    private String fixProducts(Model model) {
+    public String fixProducts(Model model) {
         model.addAttribute("fixProducts", this.fixProductService.getProducts());
         return "fix-products";
     }
 
+    @GetMapping("/sale")
+    public String saleProducts(Model model) {
+        model.addAttribute("saleProducts", this.productService.getProducts());
+
+        return "products-sale";
+    }
+
     @GetMapping("/search")
-    private String searchProduct(@Valid SearchProductBinding productBinding,
+    public String searchProduct(@Valid SearchProductBinding productBinding,
                                  BindingResult bindingResult,
                                  RedirectAttributes redirectAttributes,
                                  Model model){
@@ -67,9 +79,9 @@ public class ProductController {
         }
 
         if(!productBinding.isEmpty()){
-            List<ProductViewModel> productsFound = this.productService.searchProduct(productBinding);
+            List<ProductViewModel> productsFound = this.inProgressProductService.searchProduct(productBinding);
 
-            if(productsFound.size() > 0){
+            if(!productsFound.isEmpty()){
                 redirectAttributes.addFlashAttribute("productsFound", productsFound);
             }else{
                 redirectAttributes.addFlashAttribute("noProductsFound", true);
@@ -90,9 +102,9 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editProduct(@PathVariable Long id, Model model) {
+    public String editProductInProgress(@PathVariable Long id, Model model) {
 
-        SellingProduct productById = this.productService.findProductById(id);
+        InProgressProduct productById = this.inProgressProductService.findProductById(id);
         EditBindingModel productModel = this.modelMapper.map(productById, EditBindingModel.class);
 
         model.addAttribute("productModel", productModel);
@@ -103,21 +115,21 @@ public class ProductController {
     @PostMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id, @Valid EditBindingModel editBindingModel,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors() || !this.productService.isProductExists(id)) {
+        if (bindingResult.hasErrors() || !this.inProgressProductService.isProductExists(id)) {
             redirectAttributes.addAttribute("editBindingModel", editBindingModel);
             redirectAttributes.addAttribute("org.springframework.validation.BindingResult.editBindingModel", bindingResult);
 
             return "redirect:/products/edit/{id}";
         }
 
-        this.productService.editProduct(id, editBindingModel);
+        this.inProgressProductService.editProduct(id, editBindingModel);
 
         return "redirect:/products/progress";
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        this.productService.deleteProductById(id);
+        this.inProgressProductService.deleteProductById(id);
         return "successful-delete";
     }
 

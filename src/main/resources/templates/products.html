@@ -144,9 +144,14 @@
 
         </tr>
         </thead>
-        <tbody >
-        <tr  th:each="p: ${productsFound}">
-            <th></th>
+        <tbody th:each="p: ${productsFound}">
+        <tr>
+            <th>
+                <button type="button" class="btn background-btn" th:id="${p.id}"
+                        th:attr="onclick=|toggleResult(this.id, '#optionsRow' + ${p.id})|" aria-expanded="false"
+                        aria-controls="toggleResultID" aria-label="3 more from" aria-labelledby="btnMSb lblMSb">
+                </button>
+            </th>
             <th th:text="${p.id}">ID</th>
             <th th:text="${p.returnItemId}">Return Item Id</th>
             <th th:text="${p.asin}">ASIN</th>
@@ -162,6 +167,29 @@
             <th th:text="${p.subCategory}">Sub Category</th>
             <th th:text="${p.totalRetail}">Total Retail</th>
 
+        </tr>
+        <tr th:id="'optionsRow' + ${p.id}" class="hidden">
+            <th>
+                <a type="button"
+                   th:id="'deleteBtn'"
+                   th:data-id="${p.id}"
+                   class="btn btn-danger text-white">DELETE</a>
+
+            </th>
+            <th></th>
+            <th>
+                <a type="button"
+                   th:id="'editBtn'"
+                   class="btn btn-danger"
+                   th:href="@{/products/edit/{id}(id = *{p.id})}">EDIT</a>
+            </th>
+            <th></th>
+            <th>
+                <a type="button"
+                   th:id="'moveBtn'"
+                   class="btn btn-danger"
+                   th:href="@{/products/move/{id}(id = *{p.id})}">MOVE</a>
+            </th>
         </tr>
         </tbody>
 

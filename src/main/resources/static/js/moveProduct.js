@@ -2,9 +2,12 @@ let currentTab = 0;
 const productId = document.getElementById("regForm").getAttribute("data");
 let rackName = document.getElementById("rackName");
 let rackNumber = document.getElementById("rackNumber");
+let submitBtn = document.getElementById("submitBtn");
 let csrfHeaderKey = document.head.querySelector('[name=_csrf_header]').content;
 let csrfHeaderValue = document.head.querySelector('[name=_csrf]').content;
 let productSize;
+
+submitBtn.addEventListener("click", submitProduct);
 showTab(currentTab);
 
 function showTab(n) {
@@ -131,4 +134,23 @@ function fixStepIndicator(n) {
     }
 
     allSteps[n].className += " active";
+}
+
+async function submitProduct(){
+    let rackNameText = rackName.value;
+    let rackNumberText = rackNumber.value;
+    const text = `Are you sure you want to move product with id: ${productId} to Rack: ${rackNameText} - ${rackNumberText}?`
+    if (confirm(text)) {
+        await fetch(`http://localhost:8080/move/selling/${productId}/${rackNameText}/${rackNumberText}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                [csrfHeaderKey]: csrfHeaderValue
+            }
+        });
+
+        window.location.replace("http://localhost:8080/products/sale");
+    }
+
 }

@@ -2,12 +2,16 @@ package com.returns.store.storagemanager.service;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.returns.store.storagemanager.model.bindings.EditBindingModel;
+import com.returns.store.storagemanager.model.entity.InProgressProduct;
+import com.returns.store.storagemanager.model.entity.ScrapProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductNotFoundException;
 import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
+import com.returns.store.storagemanager.model.view.SellingProductView;
+import com.returns.store.storagemanager.repo.InProgressProductRepo;
 import com.returns.store.storagemanager.repo.ProductSpecification;
 import com.returns.store.storagemanager.repo.ScrapProductsRepo;
 import com.returns.store.storagemanager.repo.SellingProductRepo;
@@ -27,86 +31,34 @@ public class ProductService {
 
     private final ModelMapper modelMapper;
     private final SellingProductRepo productRepo;
+    private final InProgressProductRepo inProgressProductRepo;
     private final ScrapProductsRepo scrapProductsRepo;
 
-    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo, ScrapProductsRepo scrapProductsRepo) {
+    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo, InProgressProductRepo inProgressProductRepo, ScrapProductsRepo scrapProductsRepo) {
         this.modelMapper = modelMapper;
         this.productRepo = productRepo;
+        this.inProgressProductRepo = inProgressProductRepo;
         this.scrapProductsRepo = scrapProductsRepo;
-    }
-
-    public boolean importCSVFile(MultipartFile file) throws ProductAlreadyExists {
-        this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        List<CSVBindingObject> products;
-        try (Reader inputStreamReader = new InputStreamReader(file.getInputStream())) {
-            products = new CsvToBeanBuilder<CSVBindingObject>(inputStreamReader)
-                    .withType(CSVBindingObject.class)
-                    .build()
-                    .parse();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        for (CSVBindingObject s : products) {
-            Optional<SellingProduct> product = this.productRepo.findByReturnItemId(s.getReturnItemId());
-
-            if (product.isPresent()) {
-                throw new ProductAlreadyExists("Product with id : %s already exists!", s.getReturnItemId());
-            }
-            SellingProduct sellingProduct = modelMapper.map(s, SellingProduct.class);
-            this.productRepo.saveAndFlush(sellingProduct);
-        }
-        return true;
-    }
-
-    public List<ProductViewModel> getAllProducts() {
-        List<SellingProduct> all = this.productRepo.findAll();
-        return all
-                .stream()
-                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
-                .map(p -> p.setShortenDescription(p.getDescription())).toList();
-    }
-
-    public boolean isProductExists(Long id) {
-        return this.productRepo.findById(id).isPresent();
-    }
-
-
-    public List<ProductViewModel> searchProduct(SearchProductBinding productBinding){
-        List<ProductViewModel> productViewModels = this.productRepo
-                .findAll(new ProductSpecification(productBinding))
-                .stream()
-                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
-                .map(p -> p.setShortenDescription(p.getDescription()))
-                .toList();
-        return productViewModels;
     }
 
     public SellingProduct findProductById(Long id) {
         return this.productRepo.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
     }
 
-    public void deleteProductById(Long id) {
-        //check if exists
-        SellingProduct productById = this.findProductById(id);
-        this.productRepo.deleteById(productById.getId());
+    public void addProductForSale(SellingProduct sellingProduct, String rackName, Integer rackNumber) {
+        this.inProgressProductRepo.deleteById(sellingProduct.getId());
+        sellingProduct.setRackName(rackName)
+                .setRackNumber(rackNumber);
+        this.productRepo.saveAndFlush(sellingProduct);
     }
 
-    public void editProduct(Long id, EditBindingModel editBindingModel) {
-        SellingProduct productById = findProductById(id);
-        productById.setAsin(editBindingModel.getAsin())
-                .setCategory(editBindingModel.getCategory())
-                .setCondition(editBindingModel.getCondition())
-                .setDepartment(editBindingModel.getDepartment())
-                .setEan(editBindingModel.getEan())
-                .setCurrencyCode(editBindingModel.getCurrencyCode())
-                .setDescription(editBindingModel.getDescription())
-                .setLpn(editBindingModel.getLpn())
-                .setReturnItemId(editBindingModel.getReturnItemId())
-                .setQuantity(editBindingModel.getQuantity())
-                .setTotalRetail(editBindingModel.getTotalRetail())
-                .setSubCategory(editBindingModel.getSubCategory())
-                .setPalletId(editBindingModel.getPalletId());
+    public List<SellingProductView> getProducts() {
+        List<SellingProduct> all = this.productRepo.findAll();
+        return all
+                .stream()
+                .map(p -> this.modelMapper.map(p, SellingProductView.class))
+                .map(p -> p.setShortenDescription(p.getDescription()))
+                .toList();
 
-        this.productRepo.saveAndFlush(productById);
     }
 }

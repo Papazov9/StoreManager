@@ -2,8 +2,10 @@ package com.returns.store.storagemanager.service;
 
 import com.returns.store.storagemanager.model.bindings.RackBinding;
 import com.returns.store.storagemanager.model.entity.Rack;
+import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.enums.SizeEnum;
 import com.returns.store.storagemanager.model.exceptions.AllRacksAreFullException;
+import com.returns.store.storagemanager.model.exceptions.UnableToSaveProductToRackException;
 import com.returns.store.storagemanager.model.view.RackViewModel;
 import com.returns.store.storagemanager.model.view.RackViewResponseEntity;
 import com.returns.store.storagemanager.repo.RackRepo;
@@ -72,5 +74,15 @@ public class RackService {
         }
 
         return null;
+    }
+
+    public void updateRack(SellingProduct sellingProduct, String rackName, Integer rackNumber) {
+        Optional<Rack> byRackName = this.rackRepo.findByRackName(rackName);
+        if (byRackName.isPresent()){
+            if (byRackName.get().addProduct(sellingProduct)) {
+                this.rackRepo.saveAndFlush(byRackName.get());
+            }
+            else throw new UnableToSaveProductToRackException(byRackName.get().getId());
+        }
     }
 }

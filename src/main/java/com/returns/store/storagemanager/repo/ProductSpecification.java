@@ -1,6 +1,7 @@
 package com.returns.store.storagemanager.repo;
 
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
+import com.returns.store.storagemanager.model.entity.InProgressProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -8,7 +9,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
-public class ProductSpecification implements Specification<SellingProduct> {
+public class ProductSpecification implements Specification<InProgressProduct> {
 
     private final SearchProductBinding productBinding;
 
@@ -17,7 +18,7 @@ public class ProductSpecification implements Specification<SellingProduct> {
     }
 
     @Override
-    public Predicate toPredicate(Root<SellingProduct> root,
+    public Predicate toPredicate(Root<InProgressProduct> root,
                                  CriteriaQuery<?> query,
                                  CriteriaBuilder cb) {
 

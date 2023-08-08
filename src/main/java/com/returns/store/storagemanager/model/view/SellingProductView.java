@@ -1,7 +1,6 @@
 package com.returns.store.storagemanager.model.view;
 
-public class ProductViewModel {
-
+public class SellingProductView {
     private Long id;
     private String returnItemId;
     private String condition;
@@ -23,16 +22,21 @@ public class ProductViewModel {
 
     private String currencyCode;
 
-    private String lpn;
 
     private Double totalRetail;
+    private String lpn;
+
     private String shortenDescription;
+
+    private String rackName;
+
+    private Integer rackNumber;
 
     public String getShortenDescription() {
         return shortenDescription;
     }
 
-    public ProductViewModel setShortenDescription(String shortenDescription) {
+    public SellingProductView setShortenDescription(String shortenDescription) {
         if (shortenDescription.length() > 20) {
             this.shortenDescription = shortenDescription.substring(0, 21) + "...";
         } else {
@@ -45,7 +49,7 @@ public class ProductViewModel {
         return id;
     }
 
-    public ProductViewModel setId(Long id) {
+    public SellingProductView setId(Long id) {
         this.id = id;
         return this;
     }
@@ -54,7 +58,7 @@ public class ProductViewModel {
         return returnItemId;
     }
 
-    public ProductViewModel setReturnItemId(String returnItemId) {
+    public SellingProductView setReturnItemId(String returnItemId) {
         this.returnItemId = returnItemId;
         return this;
     }
@@ -63,7 +67,7 @@ public class ProductViewModel {
         return condition;
     }
 
-    public ProductViewModel setCondition(String condition) {
+    public SellingProductView setCondition(String condition) {
         this.condition = condition;
         return this;
     }
@@ -72,7 +76,7 @@ public class ProductViewModel {
         return palletId;
     }
 
-    public ProductViewModel setPalletId(String palletId) {
+    public SellingProductView setPalletId(String palletId) {
         this.palletId = palletId;
         return this;
     }
@@ -81,7 +85,7 @@ public class ProductViewModel {
         return department;
     }
 
-    public ProductViewModel setDepartment(String department) {
+    public SellingProductView setDepartment(String department) {
         this.department = department;
         return this;
     }
@@ -90,7 +94,7 @@ public class ProductViewModel {
         return category;
     }
 
-    public ProductViewModel setCategory(String category) {
+    public SellingProductView setCategory(String category) {
         this.category = category;
         return this;
     }
@@ -99,7 +103,7 @@ public class ProductViewModel {
         return subCategory;
     }
 
-    public ProductViewModel setSubCategory(String subCategory) {
+    public SellingProductView setSubCategory(String subCategory) {
         this.subCategory = subCategory;
         return this;
     }
@@ -108,7 +112,7 @@ public class ProductViewModel {
         return asin;
     }
 
-    public ProductViewModel setAsin(String asin) {
+    public SellingProductView setAsin(String asin) {
         this.asin = asin;
         return this;
     }
@@ -117,7 +121,7 @@ public class ProductViewModel {
         return ean;
     }
 
-    public ProductViewModel setEan(String ean) {
+    public SellingProductView setEan(String ean) {
         this.ean = ean;
         return this;
     }
@@ -126,7 +130,7 @@ public class ProductViewModel {
         return description;
     }
 
-    public ProductViewModel setDescription(String description) {
+    public SellingProductView setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -135,7 +139,7 @@ public class ProductViewModel {
         return quantity;
     }
 
-    public ProductViewModel setQuantity(Long quantity) {
+    public SellingProductView setQuantity(Long quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -144,7 +148,7 @@ public class ProductViewModel {
         return currencyCode;
     }
 
-    public ProductViewModel setCurrencyCode(String currencyCode) {
+    public SellingProductView setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
         return this;
     }
@@ -153,8 +157,26 @@ public class ProductViewModel {
         return totalRetail;
     }
 
-    public ProductViewModel setTotalRetail(Double totalRetail) {
+    public SellingProductView setTotalRetail(Double totalRetail) {
         this.totalRetail = totalRetail;
+        return this;
+    }
+
+    public String getRackName() {
+        return rackName;
+    }
+
+    public SellingProductView setRackName(String rackName) {
+        this.rackName = rackName;
+        return this;
+    }
+
+    public Integer getRackNumber() {
+        return rackNumber;
+    }
+
+    public SellingProductView setRackNumber(Integer rackNumber) {
+        this.rackNumber = rackNumber;
         return this;
     }
 
@@ -162,32 +184,8 @@ public class ProductViewModel {
         return lpn;
     }
 
-    public ProductViewModel setLpn(String lpn) {
+    public SellingProductView setLpn(String lpn) {
         this.lpn = lpn;
         return this;
-    }
-
-    public ProductViewModel() {
-    }
-
-    @Override
-    public String toString() {
-        return "ProductViewModel{" +
-                "id=" + id +
-                ", returnItemId='" + returnItemId + '\'' +
-                ", condition='" + condition + '\'' +
-                ", palletId='" + palletId + '\'' +
-                ", department='" + department + '\'' +
-                ", category='" + category + '\'' +
-                ", subCategory='" + subCategory + '\'' +
-                ", asin='" + asin + '\'' +
-                ", ean='" + ean + '\'' +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", currencyCode='" + currencyCode + '\'' +
-                ", totalRetail=" + totalRetail +
-                ", shortenDescription='" + shortenDescription + '\'' +
-                ", lpn='" + lpn + '\'' +
-                '}';
     }
 }

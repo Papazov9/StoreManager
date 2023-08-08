@@ -2,6 +2,7 @@ package com.returns.store.storagemanager.web;
 
 import com.returns.store.storagemanager.model.bindings.RackBinding;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
+import com.returns.store.storagemanager.service.InProgressProductService;
 import com.returns.store.storagemanager.service.ProductService;
 import com.returns.store.storagemanager.service.RackService;
 import jakarta.validation.Valid;
@@ -17,10 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ImportController {
 
     private final ProductService productService;
+
+    private final InProgressProductService inProgressProductService;
     private final RackService rackService;
 
-    public ImportController(ProductService productService, RackService rackService) {
+    public ImportController(ProductService productService, InProgressProductService inProgressProductService, RackService rackService) {
         this.productService = productService;
+        this.inProgressProductService = inProgressProductService;
         this.rackService = rackService;
     }
 
@@ -32,7 +36,7 @@ public class ImportController {
 
     @PostMapping("/import")
     public String importFile(@RequestParam("file") MultipartFile file) throws ProductAlreadyExists{
-        productService.importCSVFile(file);
+        this.inProgressProductService.importCSVFile(file);
         return "redirect:/products/progress";
     }
 

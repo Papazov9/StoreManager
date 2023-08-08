@@ -39,6 +39,26 @@ function toggle(btnID, eIDs) {
         theButton.setAttribute("aria-expanded", "false");
     }
 }
+function toggleResult(buttonId, ids) {
+
+    var theRows = document.querySelectorAll(ids);
+
+
+    var theButton = document.getElementById(buttonId);
+    if (theButton.getAttribute("aria-expanded") === "false") {
+
+        for (let i = 0; i < theRows.length; i++) {
+            theRows[i].classList.remove("hidden");
+        }
+
+        theButton.setAttribute("aria-expanded", "true");
+    } else {
+        for (let i = 0; i < theRows.length; i++) {
+            theRows[i].classList.add("hidden");
+        }
+        theButton.setAttribute("aria-expanded", "false");
+    }
+}
 
 
 // let allData = undefined;
