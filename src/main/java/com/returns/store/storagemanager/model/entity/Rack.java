@@ -31,12 +31,12 @@ public class Rack {
     @OneToMany(fetch = FetchType.EAGER)
     private Map<Integer, SellingProduct> products;
 
-    public Rack(){
-        this.products = new HashMap<>();
-    }
-
+    public Rack() {}
 
     public boolean addProduct(SellingProduct product) {
+        if (this.products == null) {
+            this.products = new HashMap<>();
+        }
         if (this.products.size() == this.quantity){
             this.nextFree = -1;
             return false;
