@@ -1,8 +1,14 @@
 let deleteBtn = document.getElementById("deleteBtn");
+let clearBtn = document.getElementById("clearBtn");
 let csrfHeaderKey = document.head.querySelector('[name=_csrf_header]').content;
 let csrfHeaderValue = document.head.querySelector('[name=_csrf]').content;
 
 deleteBtn.addEventListener('click', onDelete);
+clearBtn.addEventListener("click", clearSearch);
+
+function clearSearch() {
+    window.location.replace("http://localhost:8080/products/progress");
+}
 
 async function onDelete(event) {
    let productId =  event.target.getAttribute("data-id");

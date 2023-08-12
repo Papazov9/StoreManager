@@ -26,7 +26,7 @@
 
     </div>
 
-    <div class="tab">Choose size of product:
+    <div class="tab">
       <label for="productSize">Choose size of product:</label>
       <select id="productSize" name="productSize">
         <option value="SMALL">Small</option>
@@ -37,16 +37,15 @@
     <div class="tab">Choose Rack:
       <p><input id="rackName" type="text" maxlength="1" placeholder="Rack Name"></p>
       <p><input id="rackNumber" type="number" step="1" placeholder="Rack Number"></p>
+      <p id="outOfSpace" style="display: none" th:text="|Out of space in this Rack! Try another one.|"></p>
       <button type="button" id="generateBtn" class="btn btn-danger border border-1">Next Free Rack Number</button>
     </div>
 
-    <div style="overflow:auto;">
-      <div style="float:right;">
-        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-        <button type="button" id="submitBtn" style="display: none">Submit</button>
+      <div style="margin: auto; width: 50%; padding: 10px">
+        <button type="button" id="prevBtn" class="btn btn-danger align-items-center px-5" onclick="nextPrev(-1)">Previous</button>
+        <button type="button" id="nextBtn" class="btn btn-danger align-items-center px-5" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="submitBtn" class="btn btn-danger align-items-center px-5" style="display: none">Submit</button>
       </div>
-    </div>
 
     <!-- Circles which indicates the steps of the form: -->
     <div style="text-align:center;margin-top:40px;">

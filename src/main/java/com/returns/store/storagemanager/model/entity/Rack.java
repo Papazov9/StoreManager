@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "racks")
@@ -20,7 +21,7 @@ public class Rack {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Transient
+    @Column(name = "next_free")
     private Integer nextFree;
 
     @Column(nullable = false)
@@ -28,11 +29,10 @@ public class Rack {
     private SizeEnum size;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Map<Long, SellingProduct> products;
+    private Map<Integer, SellingProduct> products;
 
     public Rack(){
         this.products = new HashMap<>();
-        this.nextFree = 1;
     }
 
 
@@ -42,13 +42,33 @@ public class Rack {
             return false;
         }
         else {
-            if (this.products.containsKey(product.getId())){
+            if (this.products.containsKey(product.getRackNumber())){
                 return false;
             }
-            this.products.put(product.getId(), product);
+            this.products.put(product.getRackNumber(), product);
         }
-        this.nextFree++;
+        setNewNextFree();
         return true;
+    }
+
+    private void setNewNextFree() {
+        Integer previousBusy = null;
+        for (Integer current: this.products.keySet().stream().sorted().toList()) {
+            if (previousBusy == null) {
+                previousBusy = current;
+            } else  {
+                if (current - previousBusy > 1) {
+                    this.nextFree = previousBusy + 1;
+                    break;
+                }
+                else {
+                    previousBusy = current;
+                }
+            }
+        }
+        if (previousBusy != null) {
+            this.nextFree = previousBusy + 1;
+        }
     }
 
     public Long getId() {
@@ -96,11 +116,11 @@ public class Rack {
         return this;
     }
 
-    public Map<Long, SellingProduct> getProducts() {
+    public Map<Integer, SellingProduct> getProducts() {
         return products;
     }
 
-    public Rack setProducts(Map<Long, SellingProduct> products) {
+    public Rack setProducts(Map<Integer, SellingProduct> products) {
         this.products = products;
         return this;
     }

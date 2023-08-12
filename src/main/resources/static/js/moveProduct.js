@@ -10,11 +10,14 @@ let productSize;
 submitBtn.addEventListener("click", submitProduct);
 showTab(currentTab);
 
-function showTab(n) {
+async function showTab(n) {
     let allTabs = document.getElementsByClassName("tab");
     allTabs[n].style.display = "block";
     if (n === 2) {
+        await findNextFreeRackSpace(productSize);
         document.getElementById("submitBtn").style.display = "block";
+        const generateBtn = document.getElementById("generateBtn");
+        generateBtn.addEventListener("click", generateNewRackNumber);
     }
     else {
         document.getElementById("submitBtn").style.display = "none";
@@ -72,13 +75,10 @@ async function nextPrev(n) {
     }
     else if (currentTab === 1) {
         productSize = document.getElementById("productSize").value;
-        await findNextFreeRackSpace(productSize);
 
         allTabs[currentTab].style.display = "none";
         currentTab += n;
     }else {
-        const generateBtn = document.getElementById("generateBtn");
-        generateBtn.addEventListener("click", generateNewRackNumber);
 
         allTabs[currentTab].style.display = "none";
         currentTab += n;
@@ -86,8 +86,9 @@ async function nextPrev(n) {
     showTab(currentTab);
 }
 
-async function generateNewRackNumber(productSize, rackName, rackNumber) {
-    const response = await fetch(`http://localhost:8080/rack/findSuitable/${productSize}/${rackName}/${rackNumber}`, {
+async function generateNewRackNumber() {
+    console.log(productSize);
+    const response = await fetch(`http://localhost:8080/rack/findSuitable/${productSize}/${rackName.value}/${rackNumber.value}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -96,12 +97,16 @@ async function generateNewRackNumber(productSize, rackName, rackNumber) {
         }
     });
 
-    if (!response.ok) {
-        window.location.replace(`http://localhost:8080/returns/import/error`);
+    if (response.status === 404) {
+        document.getElementById("outOfSpace").style.display = "block";
         return;
+    }
+    else {
+        document.getElementById("outOfSpace").style.display = "none";
     }
 
     const rack = await response.json();
+    console.log(rack);
     rackName.value = rack.rackName;
     rackNumber.value = rack.rackNumber;
 }

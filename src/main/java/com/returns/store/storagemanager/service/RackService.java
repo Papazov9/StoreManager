@@ -36,7 +36,8 @@ public class RackService {
         Rack rack = new Rack();
         rack.setRackName(rackBinding.getRackName())
                 .setQuantity(rackBinding.getQuantity())
-                .setSize(sizeEnum);
+                .setSize(sizeEnum)
+                .setNextFree(1);
         this.rackRepo.saveAndFlush(rack);
     }
 

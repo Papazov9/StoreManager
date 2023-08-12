@@ -42,9 +42,12 @@ public class RackController {
     }
 
     @GetMapping("/findSuitable/{productSize}/{rackName}/{rackNumber}")
-    public ResponseEntity<RackViewResponseEntity> findSuitable(@PathVariable String productSize, @PathVariable String rackName, @PathVariable int rackNumber) {
+    public ResponseEntity<RackViewResponseEntity> findSuitable(@PathVariable String productSize, @PathVariable String rackName, @PathVariable int rackNumber, Model model) {
 
         RackViewResponseEntity result = this.rackService.findDifferentRackNumber(SizeEnum.valueOf(productSize), rackName, rackNumber);
+        if (result == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

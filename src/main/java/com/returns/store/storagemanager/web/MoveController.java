@@ -53,8 +53,8 @@ public class MoveController {
     @PostMapping("/selling/{id}/{rackName}/{rackNumber}")
     public String moveForSale(@PathVariable Long id, @PathVariable String rackName, @PathVariable Integer rackNumber) {
         InProgressProduct productById = this.inProgressProductService.findProductById(id);
-        SellingProduct sellingProduct = this.modelMapper.map(productById, SellingProduct.class);
-        this.productService.addProductForSale(sellingProduct, rackName, rackNumber);
+        SellingProduct sellingProduct = new SellingProduct();
+        sellingProduct = this.productService.addProductForSale(sellingProduct,productById, rackName, rackNumber);
         this.rackService.updateRack(sellingProduct, rackName, rackNumber);
 
         return "products-sale";

@@ -3,8 +3,23 @@ Search bar -> searching by everything with a filter and also suggestions(hard on
 
 Make descrption hover multiline not on one row only.
 
-Decide action in which table(selling or scrap) to go an element
+Questionable?? More simple way to be shown product in preparation(just buttons for decide and id to know which item we are looking for) MAYBE not totally clear idea :)
 
-Visualization of both selling table and scrap
+Move Action:
+    -sell, fix and scrap buttons instead of dropdown menu and confirm action before moving onto the next slide
+    -small and big buttons instead of dropdown menu and confirm action before moving onto the next slide
+    -in choose rack section give a list of racks for the appropriate size(if small only racks which are for small products and respective for big)
+    -think of a way when reach last position in rack generate button to move on the next rack nto sending an error message.
 
-More simple way to be shown product in preparation(just buttons for decide and id to know which item we are looking for) MAYBE no totally clear idea :)
+Racks View:
+    -when click on one of the racks to show a view of the products in this rack
+
+Scrap action and view:
+    -when click on scrap in move action to go onto slide where to choose 1-4 pallet id in which to store the product
+    -check if products in current pallet are 30 or above if so activate the export button, which downloads an excel file
+    -scrap view shows 4 lists for the pallets with items in them and below the list is the export button(active if only the list has 30 or more products)
+
+Sold Products View:
+    -in selling view add button SOLD which removes the products from selling, add it to sold table and setting a sold boolean and timestamp when the product is sold
+    -in sold view the products should be order by this timestamp Desc
+    -Questionable??? be able to export a file for the sold items ???

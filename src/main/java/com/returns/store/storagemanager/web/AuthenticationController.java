@@ -45,7 +45,7 @@ public class AuthenticationController {
         }
         this.userService.registerAndLogin(userRegistrationBinding);
 
-        return "redirect:/";
+        return "redirect:/products/progress";
     }
 
     @PostMapping("/login-error")
