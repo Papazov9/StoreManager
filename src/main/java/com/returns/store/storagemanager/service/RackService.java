@@ -48,7 +48,7 @@ public class RackService {
                 .toList();
     }
 
-    public List<Rack> getAllRacksWithProducts(){
+    public List<Rack> getAllRacksWithProducts() {
         return this.rackRepo.findAll();
     }
 
@@ -59,8 +59,7 @@ public class RackService {
                 .filter(r -> r.getNextFree() != -1)
                 .toList();
 
-        if (allRackBySize.size() == 0)
-        {
+        if (allRackBySize.size() == 0) {
             throw new AllRacksAreFullException(size);
         }
         RackViewResponseEntity result = new RackViewResponseEntity();
@@ -83,16 +82,36 @@ public class RackService {
 
     public void updateRack(SellingProduct sellingProduct, String rackName, Integer rackNumber) {
         Optional<Rack> byRackName = this.rackRepo.findByRackName(rackName);
-        if (byRackName.isPresent()){
+        if (byRackName.isPresent()) {
             if (byRackName.get().addProduct(sellingProduct)) {
                 this.rackRepo.saveAndFlush(byRackName.get());
-            }
-            else throw new UnableToSaveProductToRackException(byRackName.get().getId());
+            } else throw new UnableToSaveProductToRackException(byRackName.get().getId());
         }
     }
 
     public Rack getRackByName(String rackName) {
         return this.rackRepo.findByRackName(rackName).get();
 
+    }
+
+    public void initRacks() {
+        if (this.rackRepo.count() == 0) {
+            Rack a = new Rack().setRackName("A").setQuantity(90).setSize(SizeEnum.SMALL);
+            Rack b = new Rack().setRackName("B").setQuantity(90).setSize(SizeEnum.SMALL);
+            Rack c = new Rack().setRackName("C").setQuantity(90).setSize(SizeEnum.SMALL);
+            Rack d = new Rack().setRackName("D").setQuantity(90).setSize(SizeEnum.SMALL);
+            Rack e = new Rack().setRackName("E").setQuantity(90).setSize(SizeEnum.SMALL);
+
+            Rack f = new Rack().setRackName("F").setQuantity(25).setSize(SizeEnum.BIG);
+            Rack g = new Rack().setRackName("G").setQuantity(30).setSize(SizeEnum.BIG);
+            Rack h = new Rack().setRackName("H").setQuantity(30).setSize(SizeEnum.BIG);
+            Rack i = new Rack().setRackName("I").setQuantity(30).setSize(SizeEnum.BIG);
+            Rack j = new Rack().setRackName("J").setQuantity(30).setSize(SizeEnum.BIG);
+            Rack k = new Rack().setRackName("K").setQuantity(25).setSize(SizeEnum.BIG);
+            Rack l = new Rack().setRackName("L").setQuantity(30).setSize(SizeEnum.BIG);
+            Rack m = new Rack().setRackName("M").setQuantity(25).setSize(SizeEnum.BIG);
+
+            this.rackRepo.saveAllAndFlush(List.of(a, b, c, d, e, f, g, h, i, j, k, l, m));
+        }
     }
 }
