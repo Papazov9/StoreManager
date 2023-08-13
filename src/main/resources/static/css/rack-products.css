@@ -1,0 +1,8 @@
+.card-content {
+    max-height: 220px;  /* approx height for 10 lines, adjust if necessary */
+    overflow-y: auto;
+}
+
+.productInRack:hover{
+    background-color: #f0f2f0;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Racks Products</title>
+    <link rel="stylesheet" href="/css/rack-products.css">
+    <th:block th:replace="~{fragments/common::head}"></th:block>
+</head>
+<body>
+<div>
+    <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
+</div>
+
+<div class="m-5 text-center text-danger">
+    <h1>RACKS WITH PRODUCTS</h1>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 mb-5">
+            <div class="card" th:each="r: ${allRacksWithProducts}">
+                <div class="card-header">
+                    <p th:text="|Rack Name: ${r.getRackName()}, Quantity: ${r.getQuantity()}, Size: ${r.getSize().name()}|"></p>
+                </div>
+                <div class="card-content p-3">
+                    <ul  th:each="p: ${r.getProducts().values()}">
+                        <li class="productInRack" th:text="|Product asin: ${p.asin}, id: ${p.id}|"></li>
+
+                    </ul>
+
+                </div>
+            <button th:if="${r.getProducts().size() >= 10}" class="btn btn-danger m-1">READY</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<th:block th:replace="~{fragments/common::footer}"></th:block>
+</body>
+</html>

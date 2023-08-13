@@ -51,4 +51,10 @@ public class RackController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/products")
+    public String getRacksWithProducts(Model model){
+        model.addAttribute("allRacksWithProducts", this.rackService.getAllRacksWithProducts());
+        return "racks-products";
+    }
 }

@@ -48,6 +48,10 @@ public class RackService {
                 .toList();
     }
 
+    public List<Rack> getAllRacksWithProducts(){
+        return this.rackRepo.findAll();
+    }
+
     public RackViewResponseEntity findFirstFreeRackNumberBySize(SizeEnum size) {
         List<Rack> allRackBySize = this.rackRepo.findAllBySizeOrderByRackNameAsc(size);
         allRackBySize = allRackBySize
