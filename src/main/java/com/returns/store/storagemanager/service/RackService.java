@@ -90,4 +90,9 @@ public class RackService {
             else throw new UnableToSaveProductToRackException(byRackName.get().getId());
         }
     }
+
+    public Rack getRackByName(String rackName) {
+        return this.rackRepo.findByRackName(rackName).get();
+
+    }
 }

@@ -6,3 +6,9 @@
 .productInRack:hover{
     background-color: #f0f2f0;
 }
+
+.card-content-details{
+    justify-content: center;
+    max-height: 350px;
+    overflow-y: auto;
+}

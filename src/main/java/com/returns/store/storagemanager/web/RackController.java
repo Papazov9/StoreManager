@@ -52,6 +52,14 @@ public class RackController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/details/{rackName}")
+    public String allRacks(@PathVariable String rackName, Model model) {
+
+        model.addAttribute("rack", this.rackService.getRackByName(rackName));
+
+        return "rack-details";
+    }
+
     @GetMapping("/products")
     public String getRacksWithProducts(Model model){
         model.addAttribute("allRacksWithProducts", this.rackService.getAllRacksWithProducts());

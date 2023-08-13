@@ -30,7 +30,8 @@
     </thead>
     <tbody id="racksTableBody">
     <div th:each="p: ${allRacks}">
-      <tr>
+      <tr class="clickable-row"
+          th:attr="data-href=|http://localhost:8080/rack/details/${p.getRackName()}|">
 
         <th th:text="${p.rackName}">Rack Name</th>
         <th th:text="${p.quantity}">Quantity</th>
@@ -45,5 +46,6 @@
 </div>
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
+<script th:src="@{/js/rack.js}"></script>
 </body>
 </html>
