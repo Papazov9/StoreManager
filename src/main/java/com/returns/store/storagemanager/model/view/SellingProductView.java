@@ -32,6 +32,8 @@ public class SellingProductView {
 
     private Integer rackNumber;
 
+    private boolean sold;
+
     public String getShortenDescription() {
         return shortenDescription;
     }
@@ -42,6 +44,15 @@ public class SellingProductView {
         } else {
             this.shortenDescription = shortenDescription;
         }
+        return this;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public SellingProductView setSold(boolean sold) {
+        this.sold = sold;
         return this;
     }
 

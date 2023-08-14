@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "products_for_sale")
 public class SellingProduct extends Product{
@@ -14,8 +16,31 @@ public class SellingProduct extends Product{
     @Column(name = "rack_name")
     private String rackName;
 
-    public SellingProduct() {
+    @Column(name = "sold")
+    private Boolean sold = false;
 
+    @Column(name = "sale_time")
+    private LocalDateTime saleTime;
+
+    public SellingProduct() {
+    }
+
+    public Boolean isSold() {
+        return sold;
+    }
+
+    public SellingProduct setSold(Boolean sold) {
+        this.sold = sold;
+        return this;
+    }
+
+    public LocalDateTime getSaleTime() {
+        return saleTime;
+    }
+
+    public SellingProduct setSaleTime(LocalDateTime saleTime) {
+        this.saleTime = saleTime;
+        return this;
     }
 
     public Integer getRackNumber() {

@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrap Products</title>
+  <title>Selling Products</title>
   <link rel="stylesheet" href="/css/products.css">
   <th:block th:replace="~{fragments/common::head}"></th:block>
 </head>
@@ -38,6 +38,7 @@
       <th>Sub Category</th>
       <th>Total Retail</th>
       <th>Rack Position</th>
+      <th></th>
 
 
     </tr>
@@ -61,6 +62,9 @@
         <th th:text="${p.subCategory}">Sub Category</th>
         <th th:text="${p.totalRetail}">Total Retail</th>
         <th th:text="|${p.rackName}:${p.rackNumber}|">Rack Position</th>
+        <th>
+          <button class="btn btn-danger" onclick="confirmSale(this)">SALE</button>
+        </th>
 
       </tr>
 
@@ -71,6 +75,6 @@
 </div>
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
-<script th:src="@{/js/productTable.js}"></script>
+<script th:src="@{/js/sellingProduct.js}"></script>
 </body>
 </html>

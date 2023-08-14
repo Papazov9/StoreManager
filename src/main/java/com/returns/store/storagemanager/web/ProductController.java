@@ -6,6 +6,8 @@ import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.InProgressProduct;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
+import com.returns.store.storagemanager.model.view.SellingProductView;
+import com.returns.store.storagemanager.model.view.SoldProductsView;
 import com.returns.store.storagemanager.service.FixProductService;
 import com.returns.store.storagemanager.service.InProgressProductService;
 import com.returns.store.storagemanager.service.ProductService;
@@ -60,9 +62,16 @@ public class ProductController {
 
     @GetMapping("/sale")
     public String saleProducts(Model model) {
-        model.addAttribute("saleProducts", this.productService.getProducts());
+        model.addAttribute("saleProducts", this.productService.getNotSoldProducts());
 
         return "products-sale";
+    }
+
+
+    @GetMapping("/sale/{productId}")
+    public String saleProductById(@PathVariable Long productId) {
+        this.productService.saleProduct(productId);
+        return "redirect:/products/sold";
     }
 
     @GetMapping("/search")
@@ -92,6 +101,15 @@ public class ProductController {
 
         return "redirect:/products/progress";
 
+    }
+
+
+    @GetMapping("/sold")
+    public String soldProduct(Model model){
+        List<SoldProductsView> soldProducts = this.productService.getSoldProducts();
+        model.addAttribute("soldProducts", soldProducts);
+
+        return "sold-products";
     }
 
     @GetMapping("/move/{id}")
