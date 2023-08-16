@@ -22,11 +22,11 @@
     </div>
 
     <div class="tab">
-      <label for="productSize">Choose size of product:</label>
-      <select id="productSize" name="productSize">
-        <option value="SMALL">Small</option>
-        <option value="BIG">Big</option>
-      </select>
+      <label id="sizeOfProduct">Choose size of product:</label>
+<!--      <select id="productSize" name="productSize">-->
+<!--        <option value="SMALL">Small</option>-->
+<!--        <option value="BIG">Big</option>-->
+<!--      </select>-->
     </div>
 
     <div class="tab">Choose Rack:
@@ -36,11 +36,11 @@
       <button type="button" id="generateBtn" class="btn btn-danger border border-1">Next Free Rack Number</button>
     </div>
 
-      <div style="margin: auto; width: 50%; padding: 10px">
-        <button type="button" id="prevBtn" class="btn btn-danger align-items-center px-5" onclick="nextPrev(-1)">Previous</button>
-        <button type="button" id="scrapBtn" class="btn btn-danger align-items-center px-5 mx-2">SCRAP</button>
+      <div style="margin: auto; width: 50%; padding: 10px" id="buttonsDiv">
+        <button type="button" id="prevBtn" class="btn btn-danger align-items-center px-5 mx-2" onclick="nextPrev(-1, event)">Previous</button>
+        <button type="button" id="scrapBtn" class="btn btn-danger align-items-center px-5 mx-2" onclick="nextPrev(4, event)">SCRAP</button>
         <button type="button" id="fixBtn" class="btn btn-danger align-items-center px-5 mx-2">FIX</button>
-        <button type="button" id="nextBtn" class="btn btn-danger align-items-center px-5 mx-2" onclick="nextPrev(1)">Next</button>
+        <button type="button" id="nextBtn" class="btn btn-danger align-items-center px-5 mx-2" onclick="nextPrev(1, event)">Next</button>
         <button type="button" id="submitBtn" class="btn btn-danger align-items-center px-5 mx-2" style="display: inline">Submit</button>
       </div>
 

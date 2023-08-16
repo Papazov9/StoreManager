@@ -5,70 +5,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scrap Products</title>
-    <link rel="stylesheet" href="/css/products.css">
+    <title>Scarp Pallets</title>
+    <link rel="stylesheet" href="/css/rack-products.css">
     <th:block th:replace="~{fragments/common::head}"></th:block>
 </head>
 <body>
 <div>
     <th:block th:replace="~{fragments/common::loggedNav}"></th:block>
 </div>
-
-<div class="m-5 text-center text-danger">
-    <h1>SCRAP PRODUCTS</h1>
-</div>
-
-<div class="productTableDiv">
-
-    <table id="productsTable" class="table table-striped table-bordered table-sm cell">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Return Item Id</th>
-            <th>ASIN</th>
-            <th>Category</th>
-            <th>Product Condition</th>
-            <th>Currency Code</th>
-            <th>Department</th>
-            <th>Product Description</th>
-            <th>EAN</th>
-            <th>LPN</th>
-            <th>Pallet ID</th>
-            <th>quantity</th>
-            <th>Sub Category</th>
-            <th>Total Retail</th>
-
-
-        </tr>
-        </thead>
-        <tbody id="productTableBody">
-        <div th:each="p: ${scrapProducts}">
-            <tr>
-
-                <th th:text="${p.id}">ID</th>
-                <th th:text="${p.returnItemId}">Return Item Id</th>
-                <th th:text="${p.asin}">ASIN</th>
-                <th th:text="${p.category}">Category</th>
-                <th th:text="${p.condition}">Product Condition</th>
-                <th th:text="${p.currencyCode}">Currency Code</th>
-                <th th:text="${p.department}">Department</th>
-                <th th:text="${p.shortenDescription}">Product Description</th>
-                <th th:text="${p.ean}">EAN</th>
-                <th th:text="${p.lpn}">LPN</th>
-                <th th:text="${p.palletId}">Pallet ID</th>
-                <th th:text="${p.quantity}">quantity</th>
-                <th th:text="${p.subCategory}">Sub Category</th>
-                <th th:text="${p.totalRetail}">Total Retail</th>
-
-            </tr>
-
+<div class="container">
+<div class="row">
+        <div class="col-md-3 card" th:each="p : ${scrapPallets}" th:object="${p}">
+            <div class="card-header">
+                <p th:text="|Pallet Name: ${p.getName()}|"></p>
+                <p th:text="|Number of Products: ${p.getScrapProducts().size()}|"></p>
+            </div>
+            <div class="card-content-details p-3">
+                <ol class="d-block" type="1">
+                    <li class="productInRack" th:each="sp : ${p.getScrapProducts()}" th:text="|Product asin: ${sp.asin}|"></li>
+                </ol>
+            </div>
+            <button class="btn btn-danger align-content-center" th:disabled="${!p.isReady()}"><a th:href="@{/export/${p.getName()}}"></a>Export</button>
         </div>
-
-        </tbody>
-    </table>
 </div>
+</div>
+
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
-<script th:src="@{/js/productTable.js}"></script>
+<script th:src="@{/js/rack.js}"></script>
 </body>
 </html>

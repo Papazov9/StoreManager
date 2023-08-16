@@ -4,14 +4,9 @@ package com.returns.store.storagemanager.web;
 import com.returns.store.storagemanager.model.bindings.EditBindingModel;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.InProgressProduct;
-import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
-import com.returns.store.storagemanager.model.view.SellingProductView;
 import com.returns.store.storagemanager.model.view.SoldProductsView;
-import com.returns.store.storagemanager.service.FixProductService;
-import com.returns.store.storagemanager.service.InProgressProductService;
-import com.returns.store.storagemanager.service.ProductService;
-import com.returns.store.storagemanager.service.ScrapProductService;
+import com.returns.store.storagemanager.service.*;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -32,13 +27,16 @@ public class ProductController {
     private final InProgressProductService inProgressProductService;
     private final FixProductService fixProductService;
     private final ScrapProductService scrapProductService;
+
+    private final ScrapPalletService scrapPalletService;
     private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, InProgressProductService inProgressProductService, FixProductService fixProductService, ScrapProductService scrapProductService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, InProgressProductService inProgressProductService, FixProductService fixProductService, ScrapProductService scrapProductService, ScrapPalletService scrapPalletService, ModelMapper modelMapper) {
         this.productService = productService;
         this.inProgressProductService = inProgressProductService;
         this.fixProductService = fixProductService;
         this.scrapProductService = scrapProductService;
+        this.scrapPalletService = scrapPalletService;
         this.modelMapper = modelMapper;
     }
 
@@ -50,7 +48,7 @@ public class ProductController {
 
     @GetMapping("/scrap")
     public String scrapProducts(Model model) {
-        model.addAttribute("scrapProducts", scrapProductService.getScrapProducts());
+        model.addAttribute("scrapPallets", scrapPalletService.getScrapPallets());
         return "scrapProducts";
     }
 

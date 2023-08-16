@@ -41,11 +41,11 @@ public class MoveController {
         return "redirect:/products/fix";
     }
 
-    @GetMapping("/scrap/{id}")
-    public String moveToScrap(@PathVariable Long id) {
+    @GetMapping("/scrap/{id}/{palletName}")
+    public String moveToScrap(@PathVariable Long id, @PathVariable String palletName) {
         InProgressProduct productById = this.inProgressProductService.findProductById(id);
-        ScrapProduct prod = this.modelMapper.map(productById, ScrapProduct.class);
-        this.scrapProductService.addProductToScrap(prod);
+
+        this.scrapProductService.addProductToScrap(productById, palletName);
 
         return "redirect:/products/scrap";
     }

@@ -31,7 +31,9 @@ public class Rack {
     @OneToMany(fetch = FetchType.EAGER)
     private Map<Integer, SellingProduct> products;
 
-    public Rack() {}
+    public Rack() {
+        this.nextFree = 1;
+    }
 
     public boolean addProduct(SellingProduct product) {
         if (this.products == null) {

@@ -17,12 +17,13 @@ public class SellingProduct extends Product{
     private String rackName;
 
     @Column(name = "sold")
-    private Boolean sold = false;
+    private Boolean sold;
 
     @Column(name = "sale_time")
     private LocalDateTime saleTime;
 
     public SellingProduct() {
+        this.sold = false;
     }
 
     public Boolean isSold() {

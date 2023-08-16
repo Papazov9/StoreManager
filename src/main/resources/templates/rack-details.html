@@ -29,8 +29,8 @@
             </div>
 
             <div class="card-content-details p-3">
-                <ul th:each="p: ${rack.getProducts().values()}">
-                    <li class="productInRack" th:text="|Product asin: ${p.asin}|"></li>
+                <ul>
+                    <li class="productInRack" th:each="p: ${rack.getProducts().values()}" th:text="|Product asin: ${p.asin}|"></li>
                 </ul>
             </div>
 
