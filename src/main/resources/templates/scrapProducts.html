@@ -25,13 +25,15 @@
                     <li class="productInRack" th:each="sp : ${p.getScrapProducts()}" th:text="|Product asin: ${sp.asin}|"></li>
                 </ol>
             </div>
-            <button class="btn btn-danger align-content-center" th:disabled="${!p.isReady()}"><a th:href="@{/export/${p.getName()}}"></a>Export</button>
+            <form th:action="@{/export/{palletName}(palletName=${p.getName})}" th:method="GET">
+                <button type="submit" th:class="|btn btn-danger align-content-center pallet|"  th:id="${p.getName()}" th:disabled="${!p.isReady()}">Export</button>
+            </form>
         </div>
 </div>
 </div>
 
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
-<script th:src="@{/js/rack.js}"></script>
+<!--<script th:src="@{/js/scrapProducts.js}"></script>-->
 </body>
 </html>

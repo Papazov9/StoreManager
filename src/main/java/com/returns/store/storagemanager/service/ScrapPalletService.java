@@ -29,4 +29,8 @@ public class ScrapPalletService {
     public List<ScrapPallet> getScrapPallets() {
         return  this.scrapPalletRepo.findAll();
     }
+
+    public ScrapPallet findByName(String palletName) {
+        return this.scrapPalletRepo.findByName(palletName).orElseThrow(() -> new IllegalArgumentException("Invalid pallet name!"));
+    }
 }
