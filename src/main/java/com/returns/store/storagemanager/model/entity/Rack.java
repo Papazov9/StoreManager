@@ -53,6 +53,24 @@ public class Rack {
         return true;
     }
 
+    public boolean removeProduct(SellingProduct product) {
+        if (this.products == null) {
+            this.products = new HashMap<>();
+            return true;
+        }
+
+        if (this.products.containsKey(product.getRackNumber())) {
+            if (product.getRackNumber() < this.nextFree) {
+                this.nextFree = product.getRackNumber();
+            }
+
+            this.products.remove(product.getRackNumber());
+            return true;
+        }
+
+        return false;
+    }
+
     private void setNewNextFree() {
         Integer previousBusy = null;
         for (Integer current: this.products.keySet().stream().sorted().toList()) {

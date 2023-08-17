@@ -1,12 +1,13 @@
 package com.returns.store.storagemanager.service;
 
 import com.returns.store.storagemanager.model.entity.InProgressProduct;
+import com.returns.store.storagemanager.model.entity.Rack;
 import com.returns.store.storagemanager.model.exceptions.ProductNotFoundException;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.view.SellingProductView;
 import com.returns.store.storagemanager.model.view.SoldProductsView;
 import com.returns.store.storagemanager.repo.InProgressProductRepo;
-import com.returns.store.storagemanager.repo.ScrapProductsRepo;
+import com.returns.store.storagemanager.repo.RackRepo;
 import com.returns.store.storagemanager.repo.SellingProductRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,13 @@ public class ProductService {
     private final ModelMapper modelMapper;
     private final SellingProductRepo productRepo;
     private final InProgressProductRepo inProgressProductRepo;
-    private final ScrapProductsRepo scrapProductsRepo;
+    private final RackRepo rackRepo;
 
-    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo, InProgressProductRepo inProgressProductRepo, ScrapProductsRepo scrapProductsRepo) {
+    public ProductService(ModelMapper modelMapper, SellingProductRepo productRepo, InProgressProductRepo inProgressProductRepo, RackRepo rackRepo) {
         this.modelMapper = modelMapper;
         this.productRepo = productRepo;
         this.inProgressProductRepo = inProgressProductRepo;
-        this.scrapProductsRepo = scrapProductsRepo;
+        this.rackRepo = rackRepo;
     }
 
     public SellingProduct findProductById(Long id) {
@@ -73,6 +74,11 @@ public class ProductService {
     public void saleProduct(Long productId) {
         Optional<SellingProduct> optProduct = this.productRepo.findById(productId);
         if(optProduct.isPresent()){
+            Optional<Rack> byRackName = this.rackRepo.findByRackName(optProduct.get().getRackName());
+            if (byRackName.isPresent()) {
+                byRackName.get().removeProduct(optProduct.get());
+                this.rackRepo.saveAndFlush(byRackName.get());
+            }
             SellingProduct sellingProduct = optProduct.get();
             sellingProduct.setSold(true);
             sellingProduct.setSaleTime(LocalDateTime.now());
