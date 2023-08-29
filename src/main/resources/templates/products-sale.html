@@ -47,6 +47,13 @@
     <div th:each="p: ${saleProducts}">
       <tr>
 
+        <th>
+          <button type="button" class="btn background-btn" th:id="${p.id}"
+                  th:attr="onclick=|toggle(this.id, '#optionsRow' + ${p.id})|" aria-expanded="false"
+                  aria-controls="toggleID" aria-label="3 more from" aria-labelledby="btnMSb lblMSb">
+
+          </button>
+        </th>
         <th th:text="${p.id}">ID</th>
         <th th:text="${p.returnItemId}">Return Item Id</th>
         <th th:text="${p.asin}">ASIN</th>
@@ -67,6 +74,28 @@
         </th>
 
       </tr>
+      <tr th:id="'optionsRow' + ${p.id}" class="hidden">
+        <th>
+          <a type="button" sec:authorize='hasRole("ADMIN")'
+             th:id="'deleteBtn'"
+             th:data-id="${p.id}"
+             class="btn btn-danger text-white">DELETE</a>
+
+        </th>
+        <th></th>
+        <th>
+          <a type="button" sec:authorize='hasRole("ADMIN")'
+             th:id="'editBtn'"
+             class="btn btn-danger"
+             th:href="@{/products/sale/edit/{id}(id = *{p.id})}">EDIT</a>
+        </th>
+        <th>
+          <a type="button" sec:authorize='hasRole("ADMIN")'
+             th:id="'moveBtn'"
+             class="btn btn-danger"
+             th:href="@{/products/undo/{id}(id = *{p.id})}">MOVE</a>
+        </th>
+      </tr>
 
     </div>
 
@@ -75,6 +104,7 @@
 </div>
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
+<script th:src="@{/js/productTable.js}"></script>
 <script th:src="@{/js/sellingProduct.js}"></script>
 </body>
 </html>

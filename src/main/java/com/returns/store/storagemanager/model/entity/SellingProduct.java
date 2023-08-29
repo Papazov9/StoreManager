@@ -1,5 +1,6 @@
 package com.returns.store.storagemanager.model.entity;
 
+import com.returns.store.storagemanager.model.enums.SizeEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -22,6 +23,8 @@ public class SellingProduct extends Product{
     @Column(name = "sale_time")
     private LocalDateTime saleTime;
 
+    @Column
+    private SizeEnum size;
     public SellingProduct() {
         this.sold = false;
     }
@@ -59,6 +62,19 @@ public class SellingProduct extends Product{
 
     public SellingProduct setRackName(String rackName) {
         this.rackName = rackName;
+        return this;
+    }
+
+    public Boolean getSold() {
+        return sold;
+    }
+
+    public SizeEnum getSize() {
+        return size;
+    }
+
+    public SellingProduct setSize(SizeEnum size) {
+        this.size = size;
         return this;
     }
 

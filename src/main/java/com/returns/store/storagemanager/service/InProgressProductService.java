@@ -5,7 +5,6 @@ import com.returns.store.storagemanager.model.bindings.CSVBindingObject;
 import com.returns.store.storagemanager.model.bindings.EditBindingModel;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.InProgressProduct;
-import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.exceptions.ProductAlreadyExists;
 import com.returns.store.storagemanager.model.exceptions.ProductNotFoundException;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
@@ -81,6 +80,12 @@ public class InProgressProductService {
 
     public void editProduct(Long id, EditBindingModel editBindingModel) {
         InProgressProduct productById = findProductById(id);
+        mapFromModelToEntity(editBindingModel, productById);
+
+        this.inProgressProductRepo.saveAndFlush(productById);
+    }
+
+    private static void mapFromModelToEntity(EditBindingModel editBindingModel, InProgressProduct productById) {
         productById.setAsin(editBindingModel.getAsin())
                 .setCategory(editBindingModel.getCategory())
                 .setCondition(editBindingModel.getCondition())
@@ -94,8 +99,6 @@ public class InProgressProductService {
                 .setTotalRetail(editBindingModel.getTotalRetail())
                 .setSubCategory(editBindingModel.getSubCategory())
                 .setPalletId(editBindingModel.getPalletId());
-
-        this.inProgressProductRepo.saveAndFlush(productById);
     }
 
     public void deleteProductById(Long id) {

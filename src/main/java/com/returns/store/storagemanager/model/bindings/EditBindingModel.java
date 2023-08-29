@@ -58,6 +58,12 @@ public class EditBindingModel {
     @Positive
     private Double totalRetail;
 
+    @Size(min = 1, max = 1)
+    private String rackName;
+
+    @Positive
+    private Integer rackNumber;
+
     public EditBindingModel() {}
 
     public Long getId() {
@@ -183,6 +189,24 @@ public class EditBindingModel {
 
     public EditBindingModel setLpn(String lpn) {
         this.lpn = lpn;
+        return this;
+    }
+
+    public String getRackName() {
+        return rackName;
+    }
+
+    public EditBindingModel setRackName(String rackName) {
+        this.rackName = rackName;
+        return this;
+    }
+
+    public Integer getRackNumber() {
+        return rackNumber;
+    }
+
+    public EditBindingModel setRackNumber(Integer rackNumber) {
+        this.rackNumber = rackNumber;
         return this;
     }
 }

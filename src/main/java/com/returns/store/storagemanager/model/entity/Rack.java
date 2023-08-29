@@ -39,11 +39,15 @@ public class Rack {
         if (this.products == null) {
             this.products = new HashMap<>();
         }
-        if (this.products.size() == this.quantity){
+        if (this.products.size() == this.quantity - 1){
+            this.products.put(product.getRackNumber(), product);
+            this.nextFree = -1;
+            return true;
+        }
+        else if (this.products.size() == this.quantity) {
             this.nextFree = -1;
             return false;
-        }
-        else {
+        }else {
             if (this.products.containsKey(product.getRackNumber())){
                 return false;
             }
@@ -55,12 +59,17 @@ public class Rack {
 
     private void setNewNextFree() {
         Integer previousBusy = null;
+        boolean isSet = false;
+        if (this.nextFree == -1) {
+            return;
+        }
         for (Integer current: this.products.keySet().stream().sorted().toList()) {
             if (previousBusy == null) {
                 previousBusy = current;
             } else  {
                 if (current - previousBusy > 1) {
                     this.nextFree = previousBusy + 1;
+                    isSet = true;
                     break;
                 }
                 else {
@@ -68,7 +77,7 @@ public class Rack {
                 }
             }
         }
-        if (previousBusy != null) {
+        if (previousBusy != null && !isSet) {
             this.nextFree = previousBusy + 1;
         }
     }
@@ -129,5 +138,13 @@ public class Rack {
 
     public boolean isFull() {
         return this.products.size() == this.quantity;
+    }
+
+    public void removeProduct(SellingProduct product) {
+        this.products.remove(product.getRackNumber());
+
+        if (this.nextFree > product.getRackNumber()) {
+            this.nextFree  = product.getRackNumber();
+        }
     }
 }

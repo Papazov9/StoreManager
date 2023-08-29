@@ -4,8 +4,10 @@ package com.returns.store.storagemanager.web;
 import com.returns.store.storagemanager.model.bindings.EditBindingModel;
 import com.returns.store.storagemanager.model.bindings.SearchProductBinding;
 import com.returns.store.storagemanager.model.entity.InProgressProduct;
+import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.model.view.SoldProductsView;
+import com.returns.store.storagemanager.repo.SellingProductRepo;
 import com.returns.store.storagemanager.service.*;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -23,19 +25,15 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
     private final InProgressProductService inProgressProductService;
     private final FixProductService fixProductService;
-    private final ScrapProductService scrapProductService;
-
     private final ScrapPalletService scrapPalletService;
     private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, InProgressProductService inProgressProductService, FixProductService fixProductService, ScrapProductService scrapProductService, ScrapPalletService scrapPalletService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, InProgressProductService inProgressProductService, FixProductService fixProductService, ScrapPalletService scrapPalletService, ModelMapper modelMapper) {
         this.productService = productService;
         this.inProgressProductService = inProgressProductService;
         this.fixProductService = fixProductService;
-        this.scrapProductService = scrapProductService;
         this.scrapPalletService = scrapPalletService;
         this.modelMapper = modelMapper;
     }
@@ -117,6 +115,13 @@ public class ProductController {
         return "move-product";
     }
 
+    @GetMapping("/undo/{id}")
+    public String moveToInProgress(@PathVariable Long id) {
+        this.productService.handleProduct(id);
+
+        return "redirect:/products/progress";
+    }
+
     @GetMapping("/edit/{id}")
     public String editProductInProgress(@PathVariable Long id, Model model) {
 
@@ -126,6 +131,16 @@ public class ProductController {
         model.addAttribute("productModel", productModel);
 
         return "edit-product";
+    }
+    @GetMapping("/sale/edit/{id}")
+    public String editProductForSale(@PathVariable Long id, Model model) {
+
+        SellingProduct productById = this.productService.findProductById(id);
+        EditBindingModel productModel = this.modelMapper.map(productById, EditBindingModel.class);
+
+        model.addAttribute("productModel", productModel);
+
+        return "edit-sale-product";
     }
 
     @PostMapping("/edit/{id}")
@@ -141,6 +156,21 @@ public class ProductController {
         this.inProgressProductService.editProduct(id, editBindingModel);
 
         return "redirect:/products/progress";
+    }
+
+    @PostMapping("/sale/edit/{id}")
+    public String editSaleProduct(@PathVariable Long id, @Valid EditBindingModel editBindingModel,
+                              BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors() || !this.productService.isProductExists(id)) {
+            redirectAttributes.addAttribute("editBindingModel", editBindingModel);
+            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.editBindingModel", bindingResult);
+
+            return "redirect:/products/sale/edit/{id}";
+        }
+
+        this.productService.editProduct(id, editBindingModel);
+
+        return "redirect:/products/sale";
     }
 
     @DeleteMapping("/delete/{id}")

@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Edit product</title>
+  <meta charset="UTF-8">
+  <title>Edit product</title>
   <th:block th:replace="~{fragments/common::head}"></th:block>
 </head>
 <body>
@@ -13,9 +13,9 @@
 </header>
 
 <main>
-  <h1 class="text-center mt-2"><span class="badge badge-pill badge-danger">Edit product</span></h1>
+  <h1 class="text-center mt-2"><span class="badge badge-pill badge-danger">Edit Sale product</span></h1>
 
-  <form th:object="${productModel}" class="mx-auto w-25 bg-blur rounded" th:method="POST" th:action="@{/products/edit/{id}(id=*{id})}">
+  <form th:object="${productModel}" class="mx-auto w-25 bg-blur rounded" th:method="POST" th:action="@{/products/sale/edit/{id}(id=*{id})}">
 
     <div class="form-group">
       <div class="label-holder textCol d-flex justify-content-center">
@@ -100,27 +100,27 @@
     </div>
 
     <div class="form-group">
-    <div class="label-holder textCol d-flex justify-content-center">
-      <label for="subCategory" class="h4 mb-2 text-dark">SubCategory</label>
-    </div>
-    <input th:field="*{subCategory}" th:errorclass="bg-warning" type="text" name="subCategory" class="form-control" id="subCategory"/>
-    <small th:if="${#fields.hasErrors('subCategory')}"
-           th:errors="*{subCategory}"
-           class="bg-gray text-light rounded">
-      The SubCategory field should not be empty.
-    </small>
-  `</div>
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="subCategory" class="h4 mb-2 text-dark">SubCategory</label>
+      </div>
+      <input th:field="*{subCategory}" th:errorclass="bg-warning" type="text" name="subCategory" class="form-control" id="subCategory"/>
+      <small th:if="${#fields.hasErrors('subCategory')}"
+             th:errors="*{subCategory}"
+             class="bg-gray text-light rounded">
+        The SubCategory field should not be empty.
+      </small>
+      `</div>
     <div class="form-group">
-    <div class="label-holder textCol d-flex justify-content-center">
-      <label for="ean" class="h4 mb-2 text-dark">EAN</label>
-    </div>
-    <input th:field="*{ean}" th:errorclass="bg-warning" type="text" name="ean" class="form-control" id="ean"/>
-    <small th:if="${#fields.hasErrors('ean')}"
-           th:errors="*{ean}"
-           class="bg-gray text-light rounded">
-      The EAN field should not be empty.
-    </small>
-  </div>`
+      <div class="label-holder textCol d-flex justify-content-center">
+        <label for="ean" class="h4 mb-2 text-dark">EAN</label>
+      </div>
+      <input th:field="*{ean}" th:errorclass="bg-warning" type="text" name="ean" class="form-control" id="ean"/>
+      <small th:if="${#fields.hasErrors('ean')}"
+             th:errors="*{ean}"
+             class="bg-gray text-light rounded">
+        The EAN field should not be empty.
+      </small>
+    </div>`
 
     <div class="form-group">
       <div class="label-holder textCol d-flex justify-content-center">
@@ -167,7 +167,7 @@
       </small>
     </div>
 
-    <div class="form-group" th:if="for-sale">
+    <div class="form-group">
       <div class="label-holder textCol d-flex justify-content-center">
         <label for="rackName" class="h4 mb-2 text-dark">Rack Name</label>
       </div>
@@ -179,7 +179,7 @@
       </small>
     </div>
 
-    <div class="form-group" th:if="for-sale">
+    <div class="form-group">
       <div class="label-holder textCol d-flex justify-content-center">
         <label for="rackNumber" class="h4 mb-2 text-dark">Rack Number</label>
       </div>
