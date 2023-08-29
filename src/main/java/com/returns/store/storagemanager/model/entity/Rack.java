@@ -157,12 +157,4 @@ public class Rack {
     public boolean isFull() {
         return this.products.size() == this.quantity;
     }
-
-    public void removeProduct(SellingProduct product) {
-        this.products.remove(product.getRackNumber());
-
-        if (this.nextFree > product.getRackNumber()) {
-            this.nextFree  = product.getRackNumber();
-        }
-    }
 }
