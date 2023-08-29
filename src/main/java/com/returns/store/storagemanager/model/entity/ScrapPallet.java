@@ -18,6 +18,9 @@ public class ScrapPallet {
     @Column(name = "is_ready")
     private boolean isReady;
 
+    @Column(name = "pallet_exported")
+    private boolean exported;
+
     public static final int MINIMAL_QUANTITY = 30;
 
     @OneToMany(mappedBy = "scrapPallet",fetch = FetchType.EAGER)
@@ -71,6 +74,15 @@ public class ScrapPallet {
 
     public ScrapPallet setReady(boolean ready) {
         isReady = ready;
+        return this;
+    }
+
+    public boolean isExported() {
+        return exported;
+    }
+
+    public ScrapPallet setExported(boolean exported) {
+        this.exported = exported;
         return this;
     }
 }

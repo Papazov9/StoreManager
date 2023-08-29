@@ -32,9 +32,18 @@ public class ExportController {
     public void exportExcel(@PathVariable String palletName, HttpServletResponse response) throws IOException {
         ResponseEntity<StreamingResponseBody> responseEntity;
         ScrapPallet pallet = this.scrapPalletService.findByName(palletName);
+        this.scrapPalletService.setExportedTrue(pallet);
         ExcelExportService excelExportService = new ExcelExportService(pallet.getScrapProducts());
 
         excelExportService.export(response, palletName);
+
+    }
+
+    @GetMapping("/delete/all/{palletName}")
+    public String deleteAll(@PathVariable String palletName){
+        ScrapPallet pallet = this.scrapPalletService.findByName(palletName);
+        this.scrapPalletService.deleteAllProductsInPallet(pallet);
+        return "redirect:/products/scrap";
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
