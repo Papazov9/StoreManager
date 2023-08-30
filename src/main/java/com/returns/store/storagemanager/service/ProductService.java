@@ -97,9 +97,7 @@ public class ProductService {
     public List<SoldProductsView> getSoldProducts() {
         return this.productRepo.findBySoldIsTrueOrderBySaleTimeDesc()
                 .stream()
-                .map(p -> this.modelMapper.map(p, SoldProductsView.class))
-                .map(p -> p.setShortenDescription(p.getDescription()))
-                .map(p -> p.setSaleTimeString(p.getSaleTime()))
+                .map(this::sellingToSoldProductMapper)
                 .toList();
     }
 
@@ -168,4 +166,13 @@ public class ProductService {
                 .setDescription(fixProduct.getDescription())
                 .setEan(fixProduct.getEan());
     }
+
+    private SoldProductsView sellingToSoldProductMapper(SellingProduct sellingProduct){
+        SoldProductsView soldProduct = this.modelMapper.map(sellingProduct, SoldProductsView.class);
+        soldProduct.setShortenDescription(soldProduct.getDescription());
+        soldProduct.setSaleTimeString(soldProduct.getSaleTime());
+        soldProduct.setPreviousRackPosition(sellingProduct.getRackName(), sellingProduct.getRackNumber());
+        return soldProduct;
+    }
+
 }

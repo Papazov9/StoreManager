@@ -28,15 +28,22 @@
             <form th:action="@{/export/{palletName}(palletName=${p.getName})}" th:method="GET">
                 <button type="submit" th:class="|btn btn-danger align-content-center pallet|"  th:id="${p.getName()}" th:disabled="${!p.isReady()}">Export</button>
             </form>
-            <form  th:method="GET" th:action="@{/export/delete/all/{palletName}(palletName=${p.getName})}" id="deleteForm">
-                <button th:if="${p.isExported()}" th:class="|btn btn-danger align-content-center pallet mt-2|" th:id="${p.getName()}" type="submit" >Delete All</button>
-            </form>
+<!--            th:method="GET" th:action="@{/export/delete/all/{palletName}(palletName=${p.getName})}" id="deleteForm"-->
+            <div>
+                <button
+                        type="submit"
+                        th:id="'deleteAllBtn'"
+                        th:data-id="${p.getName()}"
+                        th:class="|btn btn-danger align-content-center pallet mt-2|"
+                        th:if="${p.isExported()}"
+                         >Delete All</button>
+            </div>
         </div>
 </div>
 </div>
 
 
 <th:block th:replace="~{fragments/common::footer}"></th:block>
-<!--<script th:src="@{/js/scrapPallet.js}"></script>-->
+<script th:src="@{/js/scrapPallet.js}"></script>
 </body>
 </html>

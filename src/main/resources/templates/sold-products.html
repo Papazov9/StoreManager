@@ -26,6 +26,7 @@
         <tr>
             <th>ID</th>
             <th>Sale Date</th>
+            <th>Previous Rack Position</th>
             <th>Return Item Id</th>
             <th>ASIN</th>
             <th>Category</th>
@@ -47,6 +48,7 @@
 
                 <th th:text="${p.id}">ID</th>
                 <th th:text="${p.saleTimeString}"></th>
+                <th th:text="${p.previousRackPosition}"></th>
                 <th th:text="${p.returnItemId}">Return Item Id</th>
                 <th th:text="${p.asin}">ASIN</th>
                 <th th:text="${p.category}">Category</th>

@@ -6,8 +6,10 @@ import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.enums.SizeEnum;
 import com.returns.store.storagemanager.model.exceptions.AllRacksAreFullException;
 import com.returns.store.storagemanager.model.exceptions.UnableToSaveProductToRackException;
+import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.model.view.RackViewModel;
 import com.returns.store.storagemanager.model.view.RackViewResponseEntity;
+import com.returns.store.storagemanager.model.view.SellingProductView;
 import com.returns.store.storagemanager.repo.RackRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -91,7 +93,14 @@ public class RackService {
 
     public Rack getRackByName(String rackName) {
         return this.rackRepo.findByRackName(rackName).get();
+    }
 
+    public List<SellingProductView> getRackProductsByRackName(String rackName){
+        Rack rack = this.rackRepo.findByRackName(rackName).get();
+        return  rack.getProducts().values().stream()
+                .map(p -> this.modelMapper.map(p, SellingProductView.class))
+                .map(p -> p.setShortenDescription(p.getDescription()))
+                .toList();
     }
 
     public void initRacks() {

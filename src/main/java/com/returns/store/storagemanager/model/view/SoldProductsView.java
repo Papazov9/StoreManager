@@ -32,6 +32,7 @@ public class SoldProductsView {
 
     private LocalDateTime saleTime;
     private String saleTimeString;
+    private String previousRackPosition;
 
     public SoldProductsView() {
     }
@@ -183,4 +184,12 @@ public class SoldProductsView {
         return this;
     }
 
+    public String getPreviousRackPosition() {
+        return previousRackPosition;
+    }
+
+    public SoldProductsView setPreviousRackPosition(String rackName, Integer rackNumber) {
+        this.previousRackPosition = rackName + ":" + rackNumber;
+        return this;
+    }
 }

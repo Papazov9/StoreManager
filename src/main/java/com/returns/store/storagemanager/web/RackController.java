@@ -56,13 +56,9 @@ public class RackController {
     public String allRacks(@PathVariable String rackName, Model model) {
 
         model.addAttribute("rack", this.rackService.getRackByName(rackName));
+        model.addAttribute("rackProducts", this.rackService.getRackProductsByRackName(rackName));
 
         return "rack-details";
     }
 
-    @GetMapping("/products")
-    public String getRacksWithProducts(Model model){
-        model.addAttribute("allRacksWithProducts", this.rackService.getAllRacksWithProducts());
-        return "racks-products";
-    }
 }
