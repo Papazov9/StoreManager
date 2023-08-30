@@ -1,6 +1,5 @@
 let deleteBtn = document.getElementById("deleteBtn");
 let clearBtn = document.getElementById("clearBtn");
-let moveBtn = document.getElementById("moveBtn");
 let csrfHeaderKey = document.head.querySelector('[name=_csrf_header]').content;
 let csrfHeaderValue = document.head.querySelector('[name=_csrf]').content;
 

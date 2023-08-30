@@ -160,7 +160,7 @@
             <th th:text="${p.condition}">Product Condition</th>
             <th th:text="${p.currencyCode}">Currency Code</th>
             <th th:text="${p.department}">Department</th>
-            <th th:text="${p.shortenDescription}">Product Description</th>
+            <th th:title="${p.description}" th:text="${p.shortenDescription}"></th>
             <th th:text="${p.ean}">EAN</th>
             <th th:text="${p.lpn}">LPN</th>
             <th th:text="${p.palletId}">Pallet ID</th>
@@ -244,7 +244,7 @@
                 <th th:text="${p.condition}">Product Condition</th>
                 <th th:text="${p.currencyCode}">Currency Code</th>
                 <th th:text="${p.department}">Department</th>
-                <th th:text="${p.shortenDescription}">Product Description</th>
+                <th th:title="${p.description}" th:text="${p.shortenDescription}">Product Description</th>
                 <th th:text="${p.ean}">EAN</th>
                 <th th:text="${p.lpn}">LPN</th>
                 <th th:text="${p.palletId}">Pallet ID</th>
