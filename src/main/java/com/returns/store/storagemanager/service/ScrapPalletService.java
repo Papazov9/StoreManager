@@ -25,6 +25,7 @@ public class ScrapPalletService {
                 ScrapPallet pallet = new ScrapPallet();
                 pallet.setName("Pallet_" + i);
                 pallet.setReady(false);
+                pallet.setExported(false);
                 this.scrapPalletRepo.saveAndFlush(pallet);
             }
         }

@@ -21,7 +21,7 @@ public class ScrapPallet {
     @Column(name = "pallet_exported")
     private boolean exported;
 
-    public static final int MINIMAL_QUANTITY = 30;
+    public static final int MINIMAL_QUANTITY = 1;
 
     @OneToMany(mappedBy = "scrapPallet",fetch = FetchType.EAGER)
     private List<ScrapProduct> scrapProducts;
