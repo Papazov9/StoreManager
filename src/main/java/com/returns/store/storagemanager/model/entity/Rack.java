@@ -76,10 +76,14 @@ public class Rack {
         return false;
     }
 
-    private void setNewNextFree() {
+    public void setNewNextFree() {
         Integer previousBusy = null;
         boolean isSet = false;
-        if (this.nextFree == -1) {
+        if (this.nextFree == -1 && this.products.size() == quantity) {
+            return;
+        }
+        if (!this.products.containsKey(1)){
+            this.nextFree = 1;
             return;
         }
         for (Integer current: this.products.keySet().stream().sorted().toList()) {
@@ -96,7 +100,7 @@ public class Rack {
                 }
             }
         }
-        if (previousBusy != null && !isSet) {
+        if (previousBusy != null && !isSet && !previousBusy.equals(quantity)) {
             this.nextFree = previousBusy + 1;
         }
     }

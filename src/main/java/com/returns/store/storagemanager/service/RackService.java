@@ -124,5 +124,25 @@ public class RackService {
 
             this.rackRepo.saveAllAndFlush(List.of(a, b, c, d, e, f, g, h, i, j, k, l, m));
         }
+        else {
+            updateNextFree();
+        }
+    }
+
+    private void updateNextFree() {
+        List<Rack> allRacks = this.rackRepo.findAll();
+
+        for (Rack currentRack :
+                allRacks) {
+            int size = currentRack.getProducts().size();
+
+            if (size == currentRack.getQuantity()) {
+                currentRack.setNextFree(-1);
+            }else {
+                currentRack.setNewNextFree();
+            }
+        }
+
+        this.rackRepo.saveAllAndFlush(allRacks);
     }
 }
