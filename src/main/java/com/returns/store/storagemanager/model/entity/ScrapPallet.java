@@ -19,7 +19,7 @@ public class ScrapPallet {
     private boolean isReady;
 
     @Column(name = "pallet_exported")
-    private boolean exported;
+    private Boolean exported;
 
     public static final int MINIMAL_QUANTITY = 1;
 
@@ -77,11 +77,11 @@ public class ScrapPallet {
         return this;
     }
 
-    public boolean isExported() {
+    public Boolean isExported() {
         return exported;
     }
 
-    public ScrapPallet setExported(boolean exported) {
+    public ScrapPallet setExported(Boolean exported) {
         this.exported = exported;
         return this;
     }

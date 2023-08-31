@@ -99,8 +99,9 @@
                 </th>
                 <th>
                     <a type="button" sec:authorize='hasRole("ADMIN")'
-                       th:id="'moveBtn'"
+                       th:id="|moveBtn${p.id}|"
                        th:data-id="${p.id}"
+                       onclick="confirmMoveBackToProgressProduct(event)"
                        class="btn btn-danger text-white">MOVE</a>
                     <!--          th:href="@{/products/undo/{id}(id = *{p.id})}"-->
                 </th>
@@ -119,5 +120,6 @@
 <script th:src="@{/js/rack.js}"></script>
 <script th:src="@{/js/productTable.js}"></script>
 <script th:src="@{/js/sellingProduct.js}"></script>
+<script th:src="@{/js/moveProductConfirmation.js}"></script>
 </body>
 </html>

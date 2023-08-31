@@ -2,7 +2,7 @@ async function confirmSale(buttonElement) {
 
     const row = buttonElement.closest("tr");
 
-    const asin = row.querySelector("th:nth-of-type(3)").textContent;
+    const asin = row.querySelector("th:nth-of-type(4)").textContent;
 
     console.log(asin);
 
