@@ -1,12 +1,12 @@
 package com.returns.store.storagemanager.service;
 
+import com.returns.store.storagemanager.model.RackComparator;
 import com.returns.store.storagemanager.model.bindings.RackBinding;
 import com.returns.store.storagemanager.model.entity.Rack;
 import com.returns.store.storagemanager.model.entity.SellingProduct;
 import com.returns.store.storagemanager.model.enums.SizeEnum;
 import com.returns.store.storagemanager.model.exceptions.AllRacksAreFullException;
 import com.returns.store.storagemanager.model.exceptions.UnableToSaveProductToRackException;
-import com.returns.store.storagemanager.model.view.ProductViewModel;
 import com.returns.store.storagemanager.model.view.RackViewModel;
 import com.returns.store.storagemanager.model.view.RackViewResponseEntity;
 import com.returns.store.storagemanager.model.view.SellingProductView;
@@ -56,6 +56,8 @@ public class RackService {
 
     public RackViewResponseEntity findFirstFreeRackNumberBySize(SizeEnum size) {
         List<Rack> allRackBySize = this.rackRepo.findAllBySizeOrderByRackNameAsc(size);
+        RackComparator rackComparator = new RackComparator();
+        allRackBySize.sort(rackComparator);
         allRackBySize = allRackBySize
                 .stream()
                 .filter(r -> r.getNextFree() != -1)

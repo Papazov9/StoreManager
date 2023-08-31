@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Entity
 @Table(name = "racks")
@@ -65,6 +64,8 @@ public class Rack {
 
         if (this.products.containsKey(product.getRackNumber())) {
             if (product.getRackNumber() < this.nextFree) {
+                this.nextFree = product.getRackNumber();
+            }else if (this.nextFree == -1) {
                 this.nextFree = product.getRackNumber();
             }
 
