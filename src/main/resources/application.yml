@@ -4,7 +4,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/storeManager?createDatabaseIfNotExist=true&useSSL=false
     username: root
-    password: Dragalevtsi#123
+    password:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
